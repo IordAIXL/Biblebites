@@ -1,0 +1,1326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Wile's Bible Bite Archive</title>
+  <style>
+    :root {
+      --page: #f4efe5;
+      --surface: #fffdf8;
+      --surface-soft: #eee7d8;
+      --ink: #162238;
+      --muted: #647083;
+      --line: #d8cfbf;
+      --accent: #b84c2d;
+      --accent-deep: #7f2f1c;
+      --focus: #1e6f80;
+      --shadow: 0 18px 44px rgba(38, 31, 23, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(184, 76, 45, 0.12), transparent 28rem),
+        linear-gradient(180deg, #faf6ed 0%, var(--page) 100%);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    a { color: var(--accent-deep); }
+    a:hover { color: var(--accent); }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font: 700 0.76rem/1.2 system-ui, sans-serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.3rem, 7vw, 5rem);
+      font-weight: 500;
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      max-width: 650px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font: 1rem/1.65 system-ui, sans-serif;
+    }
+
+    .count {
+      min-width: 104px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.72);
+      text-align: center;
+      font: 700 0.82rem/1 system-ui, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.8fr) repeat(3, minmax(150px, 1fr)) auto;
+      gap: 12px;
+      margin: 28px 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 253, 248, 0.82);
+      box-shadow: 0 8px 28px rgba(38, 31, 23, 0.05);
+    }
+
+    .field { min-width: 0; }
+
+    .field label {
+      display: block;
+      margin: 0 0 7px;
+      color: var(--muted);
+      font: 700 0.69rem/1 system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input, select, .clear-button {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      background: var(--surface);
+      font-family: system-ui, sans-serif;
+    }
+
+    input, select { padding: 10px 12px; }
+
+    input:focus, select:focus, .clear-button:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(30, 111, 128, 0.35);
+      outline-offset: 2px;
+    }
+
+    .clear-button {
+      align-self: end;
+      width: auto;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .clear-button:hover { border-color: var(--accent); }
+    .clear-button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+    .archive-section { margin: 38px 0 28px; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+    }
+
+    .section-head p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--muted);
+      font: 0.9rem/1.55 system-ui, sans-serif;
+    }
+
+    .profile-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 26px;
+      align-items: end;
+      padding: clamp(28px, 5vw, 48px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      color: #fff8ed;
+      background:
+        radial-gradient(circle at 92% 10%, rgba(255,255,255,.16), transparent 18rem),
+        linear-gradient(135deg, #712817, #b84c2d 62%, #d47a4e);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-card::after {
+      position: absolute;
+      right: -40px;
+      bottom: -78px;
+      color: rgba(255,255,255,.08);
+      content: "LOVE";
+      font: 800 clamp(5rem, 14vw, 10rem)/1 system-ui, sans-serif;
+      letter-spacing: -0.08em;
+    }
+
+    .profile-card > * { position: relative; z-index: 1; }
+
+    .profile-label {
+      margin: 0 0 12px;
+      color: #ffd9c6;
+      font: 800 0.7rem/1.2 system-ui, sans-serif;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .profile-card h3 { margin: 0; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 500; line-height: 1; }
+    .profile-card p { max-width: 670px; margin: 17px 0 0; color: #f9dfd1; font: 0.98rem/1.65 system-ui, sans-serif; }
+
+    .profile-link {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 999px;
+      color: #35150d;
+      background: #fff8ed;
+      font: 800 .82rem/1 system-ui, sans-serif;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .profile-link:hover { color: #35150d; background: #fff; }
+
+    .bites-heading { margin-top: 42px; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      min-height: 360px;
+      flex-direction: column;
+      padding: 28px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .card::before {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      background: var(--accent);
+      content: "";
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 18px;
+      font: 700 0.72rem/1.2 system-ui, sans-serif;
+      letter-spacing: 0.045em;
+      text-transform: uppercase;
+    }
+
+    .evidence, .topic {
+      padding: 7px 9px;
+      border-radius: 999px;
+    }
+
+    .evidence { color: #fff; background: var(--accent-deep); }
+    .topic { color: var(--muted); background: var(--surface-soft); }
+
+    .card h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      font-weight: 500;
+      line-height: 1.08;
+    }
+
+    .passage {
+      margin: 9px 0 22px;
+      color: var(--accent-deep);
+      font: 700 0.9rem/1.3 system-ui, sans-serif;
+    }
+
+    .bite {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .why {
+      margin: 22px 0 0;
+      padding: 16px 0 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font: 0.95rem/1.55 system-ui, sans-serif;
+    }
+
+    .why strong { color: var(--ink); }
+
+    .sources {
+      display: grid;
+      gap: 7px;
+      margin: 20px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      font: 0.83rem/1.45 system-ui, sans-serif;
+    }
+
+    .note-link {
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 24px;
+      font: 700 0.85rem/1.2 system-ui, sans-serif;
+      text-underline-offset: 4px;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 74px 28px;
+      border: 1px dashed #b9ae9c;
+      border-radius: 22px;
+      background: rgba(255, 253, 248, 0.62);
+      text-align: center;
+    }
+
+    .empty-mark {
+      display: grid;
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 20px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--accent);
+      background: var(--surface);
+      font-size: 1.45rem;
+    }
+
+    .empty h2 { margin: 0 0 9px; font-size: 1.55rem; }
+    .empty p { max-width: 520px; margin: 0 auto; color: var(--muted); font: 0.96rem/1.6 system-ui, sans-serif; }
+
+    .footer {
+      margin-top: 34px;
+      color: var(--muted);
+      font: 0.78rem/1.5 system-ui, sans-serif;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .clear-button { width: 100%; }
+    }
+
+    @media (max-width: 700px) {
+      .shell { width: min(100% - 22px, 1120px); padding-top: 32px; }
+      .masthead { grid-template-columns: 1fr; align-items: start; }
+      .count { justify-self: start; }
+      .controls, .gallery { grid-template-columns: 1fr; }
+      .card { min-height: 0; padding: 24px; }
+      .section-head, .profile-card { grid-template-columns: 1fr; align-items: start; }
+      .section-head { display: grid; }
+      .profile-link { justify-self: start; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #111722;
+        --surface: #182131;
+        --surface-soft: #232e40;
+        --ink: #f2eadc;
+        --muted: #adb7c6;
+        --line: #344056;
+        --accent: #e27a55;
+        --accent-deep: #f09a79;
+        --shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 12% 0%, rgba(226, 122, 85, 0.12), transparent 28rem),
+          linear-gradient(180deg, #131b28 0%, var(--page) 100%);
+      }
+
+      .evidence { color: #17120f; background: #f09a79; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .shell { width: 100%; padding: 0; }
+      .controls { display: none; }
+      .gallery { grid-template-columns: 1fr; }
+      .card { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Wile E. Coyote Research Archive</p>
+        <h1>Bible Bites</h1>
+        <p class="subtitle">Compact, carefully sourced background notes that help the biblical text come into focus.</p>
+      </div>
+      <div class="count" id="bite-count" aria-live="polite">0 Bites</div>
+    </header>
+
+    <section class="archive-section" id="profiles" aria-labelledby="profiles-title">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Long-form studies</p>
+          <h2 id="profiles-title">Profiles</h2>
+        </div>
+        <p>Full biblical portraits that trace a theme across Scripture, language, theology, and daily practice.</p>
+      </div>
+      <article class="profile-card">
+        <div>
+          <p class="profile-label">Biblical Profile No. 1 · 29-minute read</p>
+          <h3>Love</h3>
+          <p>What love is, who love is, whom love embraces, how love acts, and how love is pursued—from Hebrew vocabulary and covenant loyalty to Jesus’ self-giving and the Spirit-formed life.</p>
+        </div>
+        <a class="profile-link" href="profiles/love-a-biblical-profile.html">Read the profile →</a>
+      </article>
+    </section>
+
+    <div class="section-head bites-heading" id="bites">
+      <div>
+        <p class="eyebrow">Compact studies</p>
+        <h2>Bible Bites</h2>
+      </div>
+      <p>Search the archive by passage, Bible book, topic, or evidence level.</p>
+    </div>
+
+    <section class="controls" aria-label="Filter Bible Bites">
+      <div class="field">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Title, passage, topic, or text…" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="book-filter">Bible book</label>
+        <select id="book-filter"><option value="">All books</option></select>
+      </div>
+      <div class="field">
+        <label for="topic-filter">Topic</label>
+        <select id="topic-filter"><option value="">All topics</option></select>
+      </div>
+      <div class="field">
+        <label for="evidence-filter">Evidence</label>
+        <select id="evidence-filter"><option value="">All levels</option></select>
+      </div>
+      <button class="clear-button" id="clear-filters" type="button">Clear</button>
+    </section>
+
+    <section class="gallery" id="gallery" aria-live="polite"></section>
+
+    <footer class="footer">Each Profile and linked Bible Bite note is a complete, sourced research record.</footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    // Keep this array synchronized with every authoritative Markdown note and INDEX.md.
+    // Object fields: title, passage, book, topic, evidence, bite, why, note, sources[{label,url}].
+    const bites = [
+      {
+        title: "Gethsemane: The Place of the Oil Press",
+        passage: "Matthew 26:36–46 (NIV)",
+        book: "Matthew",
+        topic: "Language & culture",
+        evidence: "Strongly supported",
+        bite: "Gethsemane probably comes from Aramaic for ‘oil press,’ fitting its location at the Mount of Olives. Ancient processors first crushed olives, then pressed the pulp under a weighted beam to release the oil. Matthew places Jesus there ‘sorrowful and troubled,’ submitting his will to the Father before his arrest.",
+        why: "The setting makes ‘Jesus being pressed’ a vivid theological picture—but an interpretation, not symbolism Matthew explicitly explains.",
+        note: "gethsemane-place-of-the-oil-press.md",
+        sources: [
+          {
+            label: "E. W. G. Masterman, ‘Gethsemane,’ International Standard Bible Encyclopedia",
+            url: "https://www.internationalstandardbible.com/G/gethsemane.html"
+          },
+          {
+            label: "Henri Gourinard, ‘Gethsemane: The olive press,’ Saxum",
+            url: "https://www.saxum.org/gethsemane-the-olive-press/"
+          },
+          {
+            label: "Matthew 26:36–46 (NIV), Bible Gateway",
+            url: "https://www.biblegateway.com/passage/?search=Matthew%2026%3A36-46&version=NIV"
+          },
+          {
+            label: "Josh Howerton and Carlos Erazo, Lakepointe Church clip",
+            url: "https://www.youtube.com/watch?v=F8qG65IYeCA"
+          }
+        ]
+      },
+      {
+        title: "Genesis Does Not Say Rain Began at the Flood",
+        passage: "Genesis 2:4–7; 7:4, 11–12 (NRSVue)",
+        book: "Genesis",
+        topic: "Creation & flood",
+        evidence: "Text says",
+        bite: "Genesis 2:5 says God had not yet sent rain in the scene before humanity and cultivation; verse 6 says a stream watered the ground. Genesis 7 later describes forty days of rain, but never calls it earth’s first rainfall.",
+        why: "‘No rain until Noah’ stretches a statement about conditions in Genesis 2 into a claim about the entire pre-Flood climate.",
+        note: "genesis-does-not-say-rain-began-at-the-flood.md",
+        sources: [
+          {
+            label: "Genesis 2:4–7 (NRSVue), Bible Gateway",
+            url: "https://www.biblegateway.com/passage/?search=Genesis%202%3A4-7&version=NRSVUE"
+          },
+          {
+            label: "Genesis 7:4, 11–12 (NRSVue), Bible Gateway",
+            url: "https://www.biblegateway.com/passage/?search=Genesis%207%3A4%2C11-12&version=NRSVUE"
+          },
+          {
+            label: "George Janko, ‘The Kent Hovind Interview | EP. 138’",
+            url: "https://www.youtube.com/watch?v=bfk5uMyUdbA"
+          }
+        ]
+      },
+      {
+        title: "The Vapor Canopy Is a Model, Not the Text",
+        passage: "Genesis 1:6–8; 7:11–12 (NRSVue)",
+        book: "Genesis",
+        topic: "Creation & flood",
+        evidence: "Disputed",
+        bite: "Genesis describes ‘waters above’ the sky and later the ‘windows of the heavens,’ but never identifies a planet-wrapping vapor shield or says it prevented rain. The canopy is a modern scientific reconstruction; even Answers in Genesis now rejects a substantial canopy because the text does not clearly teach it and the model creates lethal heat problems.",
+        why: "A proposed mechanism for the Flood should not be presented as something Genesis itself explains.",
+        note: "the-vapor-canopy-is-a-model-not-the-text.md",
+        sources: [
+          {
+            label: "Genesis 1:6–8 and 7:11–12 (NRSVue), Bible Gateway",
+            url: "https://www.biblegateway.com/passage/?search=Genesis%201%3A6-8%3B%207%3A11-12&version=NRSVUE"
+          },
+          {
+            label: "Roger Patterson, ‘Did the Pre-Flood World Have a Vapor Canopy?’",
+            url: "https://answersingenesis.org/creationism/did-pre-flood-world-have-vapor-canopy/"
+          },
+          {
+            label: "George Janko, ‘The Kent Hovind Interview | EP. 138’",
+            url: "https://www.youtube.com/watch?v=bfk5uMyUdbA"
+          }
+        ]
+      },
+      {
+        title: "Dinosaurs Existed—But Genesis Does Not Date Them",
+        passage: "Genesis 1:20–25; Job 40:15–24 (NRSVue)",
+        book: "Genesis",
+        topic: "Bible & science",
+        evidence: "Strongly supported",
+        bite: "Fossils strongly establish dinosaurs: non-avian species disappeared about 66 million years ago, while birds are living dinosaurs. Homo sapiens appears roughly 300,000 years ago in the fossil record. Genesis names broad creature groups, not modern taxa or dates; Job calls its creature Behemoth, not ‘dinosaur.’",
+        why: "Dinosaurs need not threaten faith, but claims that humans lived with non-avian dinosaurs—or carried them on the ark—come from a particular chronology, not an explicit biblical identification.",
+        note: "dinosaurs-existed-but-genesis-does-not-date-them.md",
+        sources: [
+          {
+            label: "Natural History Museum, ‘What are dinosaurs?’",
+            url: "https://www.nhm.ac.uk/discover/what-are-dinosaurs.html"
+          },
+          {
+            label: "Smithsonian Human Origins Program, ‘Homo sapiens’",
+            url: "https://humanorigins.si.edu/evidence/human-fossils/species/homo-sapiens"
+          },
+          {
+            label: "Job 40:15–24 (NRSVue), Bible Gateway",
+            url: "https://www.biblegateway.com/passage/?search=Job%2040%3A15-24&version=NRSVUE"
+          },
+          {
+            label: "George Janko, ‘The Kent Hovind Interview | EP. 138’",
+            url: "https://www.youtube.com/watch?v=bfk5uMyUdbA"
+          }
+        ]
+      },
+      {
+        title: "The Debt Jesus Made Impossible",
+        passage: "Matthew 18:21–35 (NET)",
+        book: "Matthew",
+        topic: "Money & mercy",
+        evidence: "Strongly supported",
+        bite: "One talent equaled about 6,000 denarii, so the first servant’s 10,000-talent debt was 60 million days’ wages—600,000 times the second servant’s 100-denarius debt. Jesus chose a liability ‘beyond conception,’ not a realistic personal loan.",
+        why: "The smaller debt was still serious—roughly one hundred workdays—but the contrast makes forgiven grace incalculably larger than the wrongs disciples are asked to forgive.",
+        note: "the-debt-jesus-made-impossible.md",
+        sources: [
+          {
+            label: "NET Bible, Matthew 18:23–35",
+            url: "https://www.biblegateway.com/passage/?search=Matthew%2018%3A23-35&version=NET"
+          },
+          {
+            label: "Ernest van Eck, ‘Honour and debt release in the parable of the Unmerciful Servant’",
+            url: "https://www.scielo.org.za/scielo.php?pid=S0259-94222015000200012&script=sci_arttext"
+          },
+          {
+            label: "Josh Howerton, The Shawn Ryan Show #327",
+            url: "https://podcasts.happyscribe.com/the-shawn-ryan-show/327-josh-howerton-in-50-years-china-will-have-more-christians-than-america"
+          }
+        ]
+      },
+      {
+        title: "Daniel and the Magi: An Unproven Link",
+        passage: "Daniel 2:48; Matthew 2:1–12 (NRSVue)",
+        book: "Matthew",
+        topic: "Christmas & Magi",
+        evidence: "Interpretation",
+        bite: "Daniel was appointed over Babylon’s wise men, while Matthew’s magi came ‘from the East.’ But neither book says Daniel taught messianic prophecies to their order, nor that the Bethlehem visitors were their descendants. Magi could designate Iranian priestly specialists or, more broadly, astrologers and diviners.",
+        why: "A memorable story about faith passed down for six centuries may preach well, but it should not be introduced as a Bible fact.",
+        note: "daniel-and-the-magi-an-unproven-link.md",
+        sources: [
+          {
+            label: "Daniel 2:48 and Matthew 2:1–12 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Daniel%202%3A48%3B%20Matthew%202%3A1-12&version=NRSVUE"
+          },
+          {
+            label: "Prods Oktor Skjærvø, ‘Magi,’ Encyclopaedia Iranica",
+            url: "https://www.iranicaonline.org/articles/magi/"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "Swaddling Was Not a Sacrificial-Lamb Code",
+        passage: "Luke 2:7–16 (NET)",
+        book: "Luke",
+        topic: "Christmas customs",
+        evidence: "Strongly supported",
+        bite: "Swaddling was ordinary newborn care: Luke’s verb means to wrap an infant, and ancient Jewish and Mediterranean evidence confirms the custom. The unusual ‘sign’ was a baby lying in a feeding trough. No ancient source has been found for shepherds wrapping sacrificial lambs and placing them in mangers.",
+        why: "Jesus as God’s Lamb is biblical theology, but the swaddled-lamb backstory is a modern illustration, not verified first-century history.",
+        note: "swaddling-was-not-a-sacrificial-lamb-code.md",
+        sources: [
+          {
+            label: "John W. Welch, ‘What on Earth are Swaddling Clothes?’",
+            url: "https://www.byunewtestamentcommentary.com/?p=1152"
+          },
+          {
+            label: "NET Bible, Luke 2:7–16",
+            url: "https://classic.net.bible.org/passage.php?passage=Luke%202%3A7-16"
+          },
+          {
+            label: "Chad Bird, ‘Debunking Popular Christmastime Myths’",
+            url: "https://www.1517.org/articles/debunking-popular-christmastime-myths-temple-shepherds-migdal-eder-and-swaddling-lambs"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "Paidion Does Not Mean ‘Two-Year-Old’",
+        passage: "Matthew 2:7–16; Luke 2:12–17 (NRSVue)",
+        book: "Matthew; Luke",
+        topic: "Christmas & Magi",
+        evidence: "Strongly supported",
+        bite: "Matthew calls Jesus a paidion when the Magi visit, but Luke uses the same word for Jesus on the night the shepherds find the newborn. The Greek word can mean an infant or a child; it does not mean ‘grown-up boy.’ Herod’s order covering boys two and under supplies an upper limit, not Jesus’ exact age.",
+        why: "The Magi may have arrived sometime after the birth, but neither paidion nor Herod’s range proves that Jesus was two years old.",
+        note: "paidion-does-not-mean-two-year-old.md",
+        sources: [
+          {
+            label: "Bill Mounce, Greek New Testament Dictionary, ‘paidion’",
+            url: "https://www.billmounce.com/greek-dictionary/paidion"
+          },
+          {
+            label: "Bible Hub, Luke 2:17 Greek lexicon",
+            url: "https://biblehub.com/lexicon/luke/2-17.htm"
+          },
+          {
+            label: "Matthew 2:7–16; Luke 2:12–17 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Matthew%202%3A7-16%3B%20Luke%202%3A12-17&version=NRSVUE"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "December 25 Was Not Simply Saturnalia",
+        passage: "Luke 2:1–20 (NRSVue)",
+        book: "Luke",
+        topic: "Christmas history",
+        evidence: "Disputed",
+        bite: "Luke gives no date—or even season—for Jesus’ birth. Saturnalia normally ran December 17–23, not December 25. Scholars debate whether Christmas’s date reflects nearby Roman solar festivals, an early Christian calculation placing Jesus’ conception on March 25 and birth nine months later, or interacting influences.",
+        why: "December 25 is a later liturgical date, but saying Christians simply recycled Saturnalia turns a debated history into a settled story.",
+        note: "december-25-was-not-simply-saturnalia.md",
+        sources: [
+          {
+            label: "Luke 2:1–20 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Luke%202%3A1-20&version=NRSVUE"
+          },
+          {
+            label: "James Grout, ‘Saturnalia,’ Encyclopaedia Romana",
+            url: "https://penelope.uchicago.edu/encyclopaedia_romana/calendar/saturnalia.html"
+          },
+          {
+            label: "Andrew McGowan, ‘How December 25 Became Christmas’",
+            url: "https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/jesus-historical-jesus/how-december-25-became-christmas/"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "Revelation 12 Is Bigger Than Mary’s Nativity",
+        passage: "Revelation 12:1–17 (NRSVue)",
+        book: "Revelation",
+        topic: "Revelation & Christmas",
+        evidence: "Disputed",
+        bite: "Revelation’s woman bears the Messiah, then has other offspring identified as those who obey God and witness to Jesus. This makes her a collective symbol of Israel and the church, though some traditions also see Mary within the layered image. The vision jumps from Christ’s birth to ascension, so it is not a literal Bethlehem snapshot.",
+        why: "A dragon can illustrate the spiritual conflict behind Christmas, but calling Revelation 12 a missing character from the nativity scene flattens its apocalyptic symbolism.",
+        caution: "Marian, Israel, and church readings need not be mutually exclusive; Revelation often uses symbols with more than one referent.",
+        note: "revelation-12-is-bigger-than-marys-nativity.md",
+        sources: [
+          {
+            label: "Revelation 12 (NRSVue and NABRE)",
+            url: "https://www.biblegateway.com/passage/?search=Revelation+12&version=NRSVUE%3BNABRE"
+          },
+          {
+            label: "Yale Bible Study, ‘Seven Signs in Heaven’",
+            url: "https://yalebiblestudy.org/courses/revelation/lessons/seven-signs-study-guide/"
+          },
+          {
+            label: "USCCB, Revelation 12 notes",
+            url: "https://bible.usccb.org/bible/revelation/12"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "Shepherds Do Not Date Christmas",
+        passage: "Luke 2:8–20 (NRSVue)",
+        book: "Luke",
+        topic: "Christmas history",
+        evidence: "Plausible",
+        bite: "Luke says shepherds were living outdoors and guarding their flock at night, but supplies no month. The detail may fit a warmer season or spring lambing, yet specialists warn it cannot establish a precise birth season. Even readings that use the shepherds as a clue commonly suggest spring—not ‘almost certainly summer.’",
+        why: "Luke’s focus is who first hears the good news, not giving readers a hidden calendar date.",
+        caution: "The shepherds make some seasons more likely than others, but the surviving evidence does not settle the month.",
+        note: "shepherds-do-not-date-christmas.md",
+        sources: [
+          {
+            label: "Luke 2:8–20 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Luke%202%3A8-20&version=NRSVUE"
+          },
+          {
+            label: "Andrew McGowan, ‘How December 25 Became Christmas’",
+            url: "https://www.biblicalarchaeology.org/daily/people-cultures-in-the-bible/jesus-historical-jesus/how-december-25-became-christmas/"
+          },
+          {
+            label: "BYU New Testament Commentary, ‘Why were the shepherds in the field at night?’",
+            url: "https://www.byunewtestamentcommentary.com/why-were-the-shepherds-in-the-field-at-night-when-the-angel-came/"
+          },
+          {
+            label: "Josh Howerton, ‘4 Misconceptions About Christmas’ transcript",
+            url: "https://sermons.love/josh-howerton/28088-josh-howerton-4-misconceptions-about-christmas.html"
+          }
+        ]
+      },
+      {
+        title: "The Donkey Was a Royal Sign",
+        passage: "Matthew 21:1–11; Zechariah 9:9–10; 1 Kings 1:32–40 (NRSVue)",
+        book: "Matthew; Zechariah; 1 Kings",
+        topic: "Kingship & Palm Sunday",
+        evidence: "Strongly supported",
+        bite: "Jesus’ donkey was humble, but it was not merely a poor person’s ride. Solomon rode David’s mule to his coronation, and Zechariah’s promised king approaches on a donkey while banishing chariots, warhorses, and battle bows. Jesus was staging a royal claim—peaceful, prophetic, and unmistakably Davidic.",
+        why: "Palm Sunday reveals not a king without power, but a king defining his power through humility and peace rather than military force.",
+        note: "the-donkey-was-a-royal-sign.md",
+        sources: [
+          {
+            label: "1 Kings 1; Zechariah 9; Matthew 21 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=1%20Kings%201%3A32-40%3B%20Zechariah%209%3A9-10%3B%20Matthew%2021%3A1-11&version=NRSVUE"
+          },
+          {
+            label: "IVP New Testament Commentary, ‘Jesus Enters Jerusalem as King of Israel’",
+            url: "https://www.biblegateway.com/resources/ivp-nt/Jesus-Enters-Jerusalem-King"
+          },
+          {
+            label: "Working Preacher, ‘Commentary on Zechariah 9:9–12’",
+            url: "https://www.workingpreacher.org/commentaries/revised-common-lectionary/ordinary-14/commentary-on-zechariah-99-12-7"
+          },
+          {
+            label: "George Janko with Cliffe Knechtle, episode 62",
+            url: "https://www.tapesearch.com/episode/62-cliffe-knechtle-saved-my-life/SmRhKEqoY2SgBg98Ct5YfF"
+          }
+        ]
+      },
+      {
+        title: "The ‘Unworthy’ Supper Shamed the Poor",
+        passage: "1 Corinthians 11:17–34 (NRSVue)",
+        book: "1 Corinthians",
+        topic: "Communion & justice",
+        evidence: "Strongly supported",
+        bite: "Corinthian communion took place within a real fellowship meal: some diners became drunk while others went hungry. Wealthier believers could arrive earlier and bring more food, turning the Lord’s table into another display of social rank. In context, eating ‘unworthily’ describes a divided manner of eating—not a requirement to become personally worthy first.",
+        why: "‘Discerning the body’ includes recognizing the church body beside you; remembrance of Christ cannot coexist with humiliating poorer believers.",
+        caution: "Christian traditions differ on the Eucharist’s sacramental meaning; Paul’s rebuke of class division is clear across those differences.",
+        note: "the-unworthy-supper-shamed-the-poor.md",
+        sources: [
+          {
+            label: "1 Corinthians 11:17–34 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=1%20Corinthians%2011%3A17-34&version=NRSVUE"
+          },
+          {
+            label: "Working Preacher, ‘Commentary on 1 Corinthians 11:23–26’",
+            url: "https://www.workingpreacher.org/commentaries/revised-common-lectionary/maundy-thursday/commentary-on-1-corinthians-1123-26-9"
+          },
+          {
+            label: "David A. Steinbrenner, ‘The Lord’s Supper?’",
+            url: "https://journals.sagepub.com/doi/full/10.1177/0034637320969415"
+          },
+          {
+            label: "George Janko with NeedGod.net, episode 166",
+            url: "https://podscan.fm/podcasts/the-george-janko-show/episodes/needgodnet-schools-george-janko-ep-166"
+          }
+        ]
+      },
+      {
+        title: "Pentecost’s Tongues Were Understood",
+        passage: "Acts 2:1–13; 1 Corinthians 14:1–28 (NRSVue)",
+        book: "Acts; 1 Corinthians",
+        topic: "Holy Spirit & tongues",
+        evidence: "Text says",
+        bite: "At Pentecost, pilgrims hear God’s deeds proclaimed in their own native languages; the miracle communicates across difference rather than erasing it. In Corinth, however, Paul describes speech that others cannot understand without interpretation. The two scenes should not be blended as though Scripture describes every experience of ‘tongues’ identically.",
+        why: "Whatever one’s view of spiritual gifts today, the New Testament repeatedly makes intelligibility and the building up of others central to public worship.",
+        caution: "Christians disagree over whether Corinthian tongues were human languages, ecstatic speech, or could include both; Acts explicitly stresses that its hearers understood.",
+        note: "pentecosts-tongues-were-understood.md",
+        sources: [
+          {
+            label: "Acts 2:1–13 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Acts%202%3A1-13&version=NRSVUE"
+          },
+          {
+            label: "1 Corinthians 14:1–28 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=1%20Corinthians%2014%3A1-28&version=NRSVUE"
+          },
+          {
+            label: "Yale Bible Study, ‘The Church Begins in Jerusalem’",
+            url: "https://yalebiblestudy.org/courses/acts-of-the-apostles/lessons/the-church-begins-in-jerusalem-study-guide/"
+          },
+          {
+            label: "George Janko with NeedGod.net, episode 166",
+            url: "https://podscan.fm/podcasts/the-george-janko-show/episodes/needgodnet-schools-george-janko-ep-166"
+          }
+        ]
+      },
+      {
+        title: "Mary Sings in Hannah’s Key",
+        passage: "Luke 1:46–55; 1 Samuel 2:1–10 (NRSVue)",
+        book: "Luke; 1 Samuel",
+        topic: "Mary & biblical echoes",
+        evidence: "Strongly supported",
+        bite: "Mary’s Magnificat is patterned on Hannah’s ancient prayer. Both women praise the God who overturns human status: the proud and powerful fall, while the lowly and hungry are raised and filled. Luke thus introduces Mary not as a silent nativity figure but as a Scripture-shaped prophetic voice announcing the social shape of God’s kingdom.",
+        why: "The reversals Jesus later proclaims in Luke are already being sung before his birth.",
+        note: "mary-sings-in-hannahs-key.md",
+        sources: [
+          {
+            label: "Luke 1:46–55; 1 Samuel 2:1–10 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Luke%201%3A46-55%3B%201%20Samuel%202%3A1-10&version=NRSVUE"
+          },
+          {
+            label: "Yale Bible Study, ‘Birth of the Anointed One’",
+            url: "https://yalebiblestudy.org/courses/the-gospel-of-luke/lessons/birth-of-the-anointed-one-study-guide/"
+          },
+          {
+            label: "Working Preacher, ‘Commentary on Luke 1:46b–55’",
+            url: "https://www.workingpreacher.org/commentaries/revised-common-lectionary/fourth-sunday-of-advent-3/commentary-on-luke-146b-55-2"
+          },
+          {
+            label: "George Janko with NeedGod.net, episode 166",
+            url: "https://podscan.fm/podcasts/the-george-janko-show/episodes/needgodnet-schools-george-janko-ep-166"
+          }
+        ]
+      },
+      {
+        title: "The ‘We’ in Acts 27 Is Evidence, Not Proof",
+        passage: "Acts 27:1–28:16 (NRSVue)",
+        book: "Acts",
+        topic: "Acts & eyewitness history",
+        evidence: "Disputed",
+        bite: "Acts suddenly narrates Paul’s voyage as ‘we,’ while supplying unusually precise routes, soundings, and sailing actions. This naturally suggests that the narrator—or a source he preserved—was aboard, and the account’s nautical language fits ancient seafaring. But Acts never names its author, and scholars still debate whether ‘we’ proves the author’s personal eyewitness participation.",
+        why: "The voyage bears strong marks of proximity to real travel, while historical confidence should remain more careful than ‘the pronoun settles authorship.’",
+        note: "the-we-in-acts-27-is-evidence-not-proof.md",
+        sources: [
+          {
+            label: "Acts 27:1–28:16 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Acts%2027%3A1-28%3A16&version=NRSVUE"
+          },
+          {
+            label: "Frederick J. Long, ‘Luke for landlubbers’",
+            url: "https://www.scielo.org.za/scielo.php?lng=en&nrm=iso&pid=S1015-87582022000300022&script=sci_arttext&tlng=en"
+          },
+          {
+            label: "Yale Bible Study, Acts of the Apostles, section 8",
+            url: "https://divinity.yale.edu/sites/default/files/section-8_1.pdf"
+          },
+          {
+            label: "Josh Howerton with Jonathan Pokluda, Acts 27 transcript",
+            url: "https://podscripts.co/podcasts/live-free-with-josh-howerton/can-a-christian-be-demon-possessed-not-what-youd-expect-ft-jonathan-pokluda-live-free"
+          }
+        ]
+      },
+      {
+        title: "A Drying Euphrates Is Not a Countdown Clock",
+        passage: "Revelation 16:12–16 (NRSVue)",
+        book: "Revelation",
+        topic: "Revelation & current events",
+        evidence: "Interpretation",
+        bite: "Iraq’s water systems are genuinely shrinking under drought, heat, evaporation, reduced rainfall, and water management pressures. Revelation’s sixth bowl also dries the Euphrates—but within an apocalyptic vision of demonic kings gathering against God; for John’s first audience, eastern kings readily evoked Parthia. The river’s modern level or an ‘omega’ shape is not identified by the text as a prophetic clock.",
+        why: "Current events may remind Christians of Scripture, but resemblance alone does not establish that one news event fulfills an apocalyptic symbol.",
+        note: "a-drying-euphrates-is-not-a-countdown-clock.md",
+        sources: [
+          {
+            label: "NASA Earth Observatory, ‘Iraq Reservoirs Plunge to Low Levels’",
+            url: "https://science.nasa.gov/earth/earth-observatory/iraq-reservoirs-plunge-to-low-levels/"
+          },
+          {
+            label: "Revelation 16:12–16 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Revelation%2016%3A12-16&version=NRSVUE"
+          },
+          {
+            label: "USCCB, Revelation 16 notes",
+            url: "https://bible.usccb.org/bible/revelation/16"
+          },
+          {
+            label: "Josh Howerton with Jonathan Pokluda, transcript",
+            url: "https://podscripts.co/podcasts/live-free-with-josh-howerton/can-a-christian-be-demon-possessed-not-what-youd-expect-ft-jonathan-pokluda-live-free"
+          }
+        ]
+      },
+      {
+        title: "Paul’s Shipwreck May Be a Reverse Jonah",
+        passage: "Jonah 1:1–16; Acts 27:13–44 (NRSVue)",
+        book: "Acts",
+        topic: "Biblical echoes & obedience",
+        evidence: "Plausible",
+        bite: "Both accounts send a prophet toward a Gentile capital, then portray a violent sea, terrified sailors, and cargo thrown overboard. The contrast is sharper: disobedient Jonah endangers his shipmates, while obedient Paul becomes God’s messenger of hope and all 276 aboard survive. A recent literary study argues that Acts deliberately presents Paul as a ‘true prophet’ over against Jonah.",
+        why: "The comparison makes obedience life-giving—but Acts never names Jonah, so this should be taught as a plausible literary echo rather than a proven authorial signal.",
+        note: "pauls-shipwreck-may-be-a-reverse-jonah.md",
+        sources: [
+          {
+            label: "Jonah 1:1–16; Acts 27:13–44 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Jonah%201%3A1-16%3B%20Acts%2027%3A13-44&version=NRSVUE"
+          },
+          {
+            label: "Tamás Czövek, ‘Paul the True Prophet: Synkrisis in Acts 27’",
+            url: "https://hrcak.srce.hr/en/clanak/479666"
+          },
+          {
+            label: "Josh Howerton with Jonathan Pokluda, transcript",
+            url: "https://podscripts.co/podcasts/live-free-with-josh-howerton/can-a-christian-be-demon-possessed-not-what-youd-expect-ft-jonathan-pokluda-live-free"
+          }
+        ]
+      },
+      {
+        title: "Jesus Refuses the Sin–Suffering Blame Game",
+        passage: "John 9:1–7; Luke 13:1–5; Job 1:1–2:10 (NRSVue)",
+        book: "John",
+        topic: "Suffering & sin",
+        evidence: "Text says",
+        bite: "Scripture sometimes connects particular suffering with particular sin, but it rejects that as a universal diagnosis. Jesus denies that the man’s blindness resulted from his or his parents’ sin and rejects the idea that disaster victims were worse sinners. Job is introduced as blameless even before calamity strikes.",
+        why: "Christians may locate suffering within a fallen creation, as Howerton does, without presuming that a sufferer caused it; Jesus redirects blame toward mercy and God’s work.",
+        note: "jesus-refuses-the-sin-suffering-blame-game.md",
+        sources: [
+          {
+            label: "John 9:1–7; Luke 13:1–5 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=John%209%3A1-7%3B%20Luke%2013%3A1-5&version=NRSVUE"
+          },
+          {
+            label: "Job 1:1–2:10 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Job%201%3A1-2%3A10&version=NRSVUE"
+          },
+          {
+            label: "IVP New Testament Commentary on John 9:1–7",
+            url: "https://www.biblegateway.com/resources/ivp-nt/Jesus-Heals-Man-Born-Blind"
+          },
+          {
+            label: "Josh Howerton with Jonathan Pokluda, transcript",
+            url: "https://podscripts.co/podcasts/live-free-with-josh-howerton/can-a-christian-be-demon-possessed-not-what-youd-expect-ft-jonathan-pokluda-live-free"
+          }
+        ]
+      },
+      {
+        title: "Satan Asked to Sift All the Disciples",
+        passage: "Luke 22:31–34 (NET)",
+        book: "Luke",
+        topic: "Spiritual warfare & language",
+        evidence: "Text says",
+        bite: "English ‘you’ hides Luke’s shift in number. Satan demands to sift you all—the Greek pronoun is plural, encompassing the disciples—but Jesus says, ‘I have prayed for you, Simon,’ using the singular. Jesus then tells the restored Peter to strengthen his brothers.",
+        why: "The attack targets the community; Jesus’ intercession restores a failing disciple so he can steady the others. Peter’s denial is neither minimized nor allowed to become his final identity.",
+        note: "satan-asked-to-sift-all-the-disciples.md",
+        sources: [
+          {
+            label: "Luke 22:31–34 (NET), with translators’ notes",
+            url: "https://www.biblegateway.com/passage/?search=Luke%2022%3A31-34&version=NET"
+          },
+          {
+            label: "NET Bible, Luke 22:31 notes",
+            url: "https://classic.net.bible.org/verse.php?book=Luk&chapter=22&tab=commentaries&theme=false&verse=31"
+          },
+          {
+            label: "Josh Howerton with Jonathan Pokluda, transcript",
+            url: "https://podcasts.happyscribe.com/live-free-with-josh-howerton/8-ways-christians-open-the-door-to-the-demonic-ft"
+          }
+        ]
+      },
+      {
+        title: "‘Demonized’ Does Not Settle Possession Versus Oppression",
+        passage: "Matthew 8:28–34; Mark 5:1–20",
+        book: "Matthew",
+        topic: "Spiritual warfare & language",
+        evidence: "Disputed",
+        bite: "The Gospel verb daimonizomai describes someone under demonic power; ‘demon-possessed’ is a standard lexical translation, while ‘demonized’ is a more literal-sounding transliteration. The narratives also say an afflicted person ‘had’ an unclean spirit and that spirits entered or came out. The verb itself therefore does not prove either an ownership model or a modern possession/oppression scale.",
+        why: "Pokluda rightly warns that English ‘possession’ may suggest ownership, but changing the label cannot by itself settle whether—or how—Christians can experience demonic influence.",
+        note: "demonized-does-not-settle-possession-versus-oppression.md",
+        sources: [
+          {
+            label: "LSJ, δαιμονίζομαι",
+            url: "https://atlas.perseus.tufts.edu/dictionaries/entry/urn%3Acite2%3Ascaife-viewer%3Adictionaries.v1%3Alsj-n23228/"
+          },
+          {
+            label: "Matthew 8:28–34; Mark 5:1–20 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Matthew%208%3A28-34%3B%20Mark%205%3A1-20&version=NRSVUE"
+          },
+          {
+            label: "Graham A. Cole, ‘Demon Possession’",
+            url: "https://www.thegospelcoalition.org/essay/demon-possession/"
+          },
+          {
+            label: "Jonathan Pokluda, Blurry Creatures transcript",
+            url: "https://podscripts.co/podcasts/blurry-creatures/ep-346-your-story-has-a-villain-with-jp-pokluda"
+          }
+        ]
+      },
+      {
+        title: "Noah and Favor Form a Hebrew Mirror",
+        passage: "Genesis 5:29; 6:8–9 (NET)",
+        book: "Genesis",
+        topic: "Hebrew wordplay & grace",
+        evidence: "Plausible",
+        bite: "Noah’s Hebrew name, Noaḥ (n-ḥ), is associated with ‘rest,’ while the word translated ‘favor,’ ḥen (ḥ-n), reverses those two consonants. Scholars have proposed intentional wordplay: amid universal corruption, ‘Noah found favor.’ Yet Noaḥ and ḥen are different words, not one word spelled backward.",
+        why: "The possible sound-play sharpens Genesis’s dramatic reversal—judgment surrounds Noah, but God’s favorable regard opens a path of preservation.",
+        note: "noah-and-favor-form-a-hebrew-mirror.md",
+        sources: [
+          {
+            label: "Genesis 5:29; 6:8–9 (NET), with translators’ notes",
+            url: "https://www.biblegateway.com/passage/?search=Genesis%205%3A29%3B%206%3A8-9&version=NET"
+          },
+          {
+            label: "Gary A. Rendsburg, ‘Wordplay in Genesis’",
+            url: "https://www.biblicalarchaeology.org/scholars-study/wordplay-in-genesis/"
+          },
+          {
+            label: "George Janko with Judah Smith, episode outline",
+            url: "https://podbay.fm/p/the-george-janko-show/e/1763668500"
+          }
+        ]
+      },
+      {
+        title: "Mary Was Sitting as a Disciple",
+        passage: "Luke 10:38–42 (NET)",
+        book: "Luke",
+        topic: "Women & discipleship",
+        evidence: "Strongly supported",
+        bite: "Mary’s place ‘at the Lord’s feet’ is more than a picture of quiet devotion: it portrays the posture of a pupil receiving a teacher’s instruction. In a culture where sustained religious study was usually associated with men, Mary occupies a disciple’s place—and Jesus defends her choice.",
+        why: "The contrast is not ‘work bad, contemplation good.’ Martha is distracted by service; Mary gives Jesus’ word the undivided attention expected of a disciple.",
+        note: "mary-was-sitting-as-a-disciple.md",
+        sources: [
+          {
+            label: "Luke 10:38–42 (NET), with translators’ notes",
+            url: "https://classic.net.bible.org/passage.php?passage=luk+10%3A39-42"
+          },
+          {
+            label: "Zdzisław Żywica, ‘Martha the Hostess and Mary the Listener’",
+            url: "https://czasopisma.kul.pl/index.php/vv/article/view/13543"
+          },
+          {
+            label: "George Janko with Judah Smith, episode outline",
+            url: "https://podbay.fm/p/the-george-janko-show/e/1763668500"
+          }
+        ]
+      },
+      {
+        title: "Was Zacchaeus the Short One?",
+        passage: "Luke 19:1–10 (NRSVue)",
+        book: "Luke",
+        topic: "Greek ambiguity & Zacchaeus",
+        evidence: "Disputed",
+        bite: "Translations normally say Zacchaeus could not see because he was short. The Greek pronoun is grammatically ambiguous, however: ‘he’ could refer to Zacchaeus or to Jesus. Nearly all scholars and translations choose Zacchaeus, but Isaac Soon has recently argued that Luke may be describing a short Jesus.",
+        why: "The story’s certain center is not either man’s height: a despised tax collector seeks to see Jesus, and Jesus sees, calls, and welcomes him before the crowd does.",
+        note: "was-zacchaeus-the-short-one.md",
+        sources: [
+          {
+            label: "Luke 19:1–10 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Luke%2019%3A1-10&version=NRSVUE"
+          },
+          {
+            label: "Biblical Archaeology Society, ‘Jesus the Short King’",
+            url: "https://www.biblicalarchaeology.org/daily/jesus-the-short-king/"
+          },
+          {
+            label: "Mikeal C. Parsons, ‘Short in Stature’",
+            url: "https://www.cambridge.org/core/journals/new-testament-studies/article/abs/short-in-stature-lukes-physical-description-of-zacchaeus/8F74851BE41B5EEF5CB5970AD35E764E"
+          },
+          {
+            label: "George Janko with Judah Smith, episode outline",
+            url: "https://podbay.fm/p/the-george-janko-show/e/1763668500"
+          }
+        ]
+      },
+      {
+        title: "Samaritans Were Not Simply ‘Babylonian Half-Breeds’",
+        passage: "2 Kings 17:5–41; John 4:7–26",
+        book: "2 Kings",
+        topic: "Samaritans & historical context",
+        evidence: "Disputed",
+        bite: "Second Kings attributes Samaria’s fall and resettlement to Assyria, not Babylon, and describes imported peoples worshiping YHWH alongside other gods. Later Judean tradition used this account to question Samaritan ancestry; Samaritans claimed descent from Israel’s northern tribes. Modern specialists regard New Testament Samaritan origins as more complex than one intermarriage story.",
+        why: "Jesus’ Samaritan encounters cross a centuries-old dispute over ancestry, Scripture, and the proper sanctuary—not merely ethnic dislike of supposed ‘half-breeds.’",
+        note: "samaritans-were-not-simply-babylonian-half-breeds.md",
+        sources: [
+          {
+            label: "2 Kings 17:5–41; John 4:7–26 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=2%20Kings%2017%3A5-41%3B%20John%204%3A7-26&version=NRSVUE"
+          },
+          {
+            label: "Ingrid Hjelm, ‘The Samaritans in Recent Research’",
+            url: "https://bibleinterp.arizona.edu/articles/2015/12/pum398030"
+          },
+          {
+            label: "American Bible Society, ‘Samaritans: Then and Now’",
+            url: "https://www.americanbible.org/engage/bible-resources/articles/samaritans-then-and-now/"
+          },
+          {
+            label: "Josh Howerton, sermon transcript",
+            url: "https://podscripts.co/podcasts/live-free-with-josh-howerton/what-to-do-if-i-feel-addicted-to-something-live-free-with-josh-howerton"
+          }
+        ]
+      },
+      {
+        title: "‘Helper’ Does Not Mean Junior Assistant",
+        passage: "Genesis 2:18–23 (NET)",
+        book: "Genesis",
+        topic: "Marriage & Hebrew",
+        evidence: "Strongly supported",
+        bite: "God calls the woman an ʿezer kenegdo: a ‘helper corresponding to him.’ ʿEzer does not imply a subordinate assistant—Scripture frequently uses the noun for God as Israel’s help—while kenegdo conveys someone matching or corresponding to the man. The animals do not supply this counterpart; the woman shares his very bone and flesh.",
+        why: "Howerton’s ‘face-to-face’ marriage is a fitting application of correspondence, but the Hebrew itself establishes a suitable counterpart, not a three-position marriage model.",
+        note: "helper-does-not-mean-junior-assistant.md",
+        sources: [
+          {
+            label: "Genesis 2:18 (NET), with translators’ notes",
+            url: "https://classic.net.bible.org/passage.php?passage=Gen+2%3A18"
+          },
+          {
+            label: "Genesis 2:18–23 (NRSVue)",
+            url: "https://www.biblegateway.com/passage/?search=Genesis%202%3A18-23&version=NRSVUE"
+          },
+          {
+            label: "Josh Howerton, sermon transcript",
+            url: "https://sermons.love/josh-howerton/29010-josh-howerton-the-building-blocks-for-godly-dating-single-and-married.html"
+          }
+        ]
+      }
+    ];
+
+    const searchInput = document.querySelector("#search");
+    const bookFilter = document.querySelector("#book-filter");
+    const topicFilter = document.querySelector("#topic-filter");
+    const evidenceFilter = document.querySelector("#evidence-filter");
+    const clearButton = document.querySelector("#clear-filters");
+    const gallery = document.querySelector("#gallery");
+    const count = document.querySelector("#bite-count");
+
+    function addOptions(select, values) {
+      [...new Set(values.filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b))
+        .forEach((value) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.append(option);
+        });
+    }
+
+    function emptyState(title, message) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "empty";
+
+      const mark = document.createElement("div");
+      mark.className = "empty-mark";
+      mark.setAttribute("aria-hidden", "true");
+      mark.textContent = "⌕";
+
+      const heading = document.createElement("h2");
+      heading.textContent = title;
+
+      const copy = document.createElement("p");
+      copy.textContent = message;
+
+      wrapper.append(mark, heading, copy);
+      return wrapper;
+    }
+
+    function createCard(item) {
+      const article = document.createElement("article");
+      article.className = "card";
+
+      const meta = document.createElement("div");
+      meta.className = "card-meta";
+
+      const evidence = document.createElement("span");
+      evidence.className = "evidence";
+      evidence.textContent = item.evidence;
+
+      const topic = document.createElement("span");
+      topic.className = "topic";
+      topic.textContent = item.topic;
+      meta.append(evidence, topic);
+
+      const title = document.createElement("h2");
+      title.textContent = item.title;
+
+      const passage = document.createElement("p");
+      passage.className = "passage";
+      passage.textContent = item.passage;
+
+      const bite = document.createElement("p");
+      bite.className = "bite";
+      bite.textContent = item.bite;
+
+      const why = document.createElement("p");
+      why.className = "why";
+      const whyLabel = document.createElement("strong");
+      whyLabel.textContent = "Why it matters: ";
+      why.append(whyLabel, document.createTextNode(item.why));
+
+      article.append(meta, title, passage, bite, why);
+
+      if (item.sources.length) {
+        const sourceList = document.createElement("ol");
+        sourceList.className = "sources";
+        item.sources.forEach((source) => {
+          const row = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = source.url;
+          link.textContent = source.label;
+          if (/^https?:/i.test(source.url)) {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
+          row.append(link);
+          sourceList.append(row);
+        });
+        article.append(sourceList);
+      }
+
+      const noteLink = document.createElement("a");
+      noteLink.className = "note-link";
+      noteLink.href = item.note;
+      noteLink.textContent = "Read the complete Markdown note →";
+      article.append(noteLink);
+
+      return article;
+    }
+
+    function render() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const selectedBook = bookFilter.value;
+      const selectedTopic = topicFilter.value;
+      const selectedEvidence = evidenceFilter.value;
+
+      const visible = bites.filter((item) => {
+        const haystack = [item.title, item.passage, item.book, item.topic, item.evidence, item.bite, item.why]
+          .join(" ")
+          .toLocaleLowerCase();
+        return (!query || haystack.includes(query))
+          && (!selectedBook || item.book === selectedBook)
+          && (!selectedTopic || item.topic === selectedTopic)
+          && (!selectedEvidence || item.evidence === selectedEvidence);
+      });
+
+      gallery.replaceChildren();
+      count.textContent = `${visible.length} ${visible.length === 1 ? "Bite" : "Bites"}`;
+
+      if (!bites.length) {
+        gallery.append(emptyState(
+          "No Bible Bites saved yet",
+          "When a researched Bite is archived, its card and complete Markdown note will appear here."
+        ));
+        return;
+      }
+
+      if (!visible.length) {
+        gallery.append(emptyState(
+          "No matching Bites",
+          "Try a different search or clear one of the filters."
+        ));
+        return;
+      }
+
+      visible.forEach((item) => gallery.append(createCard(item)));
+    }
+
+    addOptions(bookFilter, bites.map((item) => item.book));
+    addOptions(topicFilter, bites.map((item) => item.topic));
+    addOptions(evidenceFilter, bites.map((item) => item.evidence));
+
+    [searchInput, bookFilter, topicFilter, evidenceFilter].forEach((control) => {
+      control.addEventListener("input", render);
+    });
+
+    clearButton.addEventListener("click", () => {
+      searchInput.value = "";
+      bookFilter.value = "";
+      topicFilter.value = "";
+      evidenceFilter.value = "";
+      searchInput.focus();
+      render();
+    });
+
+    const hasBites = bites.length > 0;
+    [searchInput, bookFilter, topicFilter, evidenceFilter, clearButton].forEach((control) => {
+      control.disabled = !hasBites;
+    });
+
+    render();
+  </script>
+</body>
+</html>

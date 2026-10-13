@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A whole-Bible profile of what love is, who love is, how love acts, and how love is pursued.">
+  <title>Love: A Biblical Profile | Wile's Bible Bite Archive</title>
+  <style>
+    :root {
+      --paper: #fbf8f0;
+      --surface: #fffefb;
+      --ink: #192438;
+      --muted: #687386;
+      --line: #dcd3c4;
+      --accent: #a54228;
+      --accent-soft: #f5e4da;
+      --gold: #aa7a20;
+      --quote: #f0eadf;
+      --shadow: 0 22px 60px rgba(40, 31, 22, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: radial-gradient(circle at 8% 0%, rgba(165, 66, 40, .10), transparent 30rem), var(--paper);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:hover { color: #742b1a; }
+    .progress { position: fixed; z-index: 20; inset: 0 auto auto 0; width: 0; height: 4px; background: var(--accent); }
+    .topbar {
+      position: sticky;
+      z-index: 10;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      min-height: 58px;
+      padding: 10px max(18px, calc((100vw - 1320px) / 2));
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      backdrop-filter: blur(16px);
+      font: 700 .78rem/1.2 system-ui, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .topbar a { text-decoration: none; }
+    .reading-time { color: var(--muted); }
+    .hero {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: clamp(64px, 9vw, 120px) 24px 58px;
+      text-align: center;
+    }
+    .kicker { margin: 0 0 16px; color: var(--accent); font: 800 .78rem/1.2 system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
+    .hero h1 { max-width: 900px; margin: 0 auto; font-size: clamp(3.2rem, 9vw, 7.5rem); font-weight: 500; line-height: .9; letter-spacing: -.055em; }
+    .hero p { max-width: 760px; margin: 28px auto 0; color: var(--muted); font: 1.08rem/1.7 system-ui, sans-serif; }
+    .hero .thesis {
+      margin-top: 34px;
+      padding: 24px 28px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      color: var(--ink);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      font: 600 1.03rem/1.65 system-ui, sans-serif;
+    }
+    .layout { display: grid; grid-template-columns: 250px minmax(0, 790px); gap: 62px; width: min(1160px, calc(100% - 40px)); margin: 0 auto 100px; align-items: start; }
+    .toc { position: sticky; top: 82px; max-height: calc(100vh - 105px); overflow: auto; padding: 22px; border: 1px solid var(--line); border-radius: 18px; background: color-mix(in srgb, var(--surface) 86%, transparent); }
+    .toc h2 { margin: 0 0 14px; color: var(--muted); font: 800 .72rem/1.2 system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+    .toc ol { display: grid; gap: 9px; margin: 0; padding-left: 20px; color: var(--muted); font: .79rem/1.35 system-ui, sans-serif; }
+    .toc a { color: inherit; text-decoration: none; }
+    .toc a:hover { color: var(--accent); }
+    article { min-width: 0; padding: 42px clamp(24px, 5vw, 66px) 72px; border: 1px solid var(--line); border-radius: 26px; background: var(--surface); box-shadow: var(--shadow); }
+    article > h1, article > h1 + h2, article > h1 + h2 + p, article > h1 + h2 + p + p { display: none; }
+    article h2 { margin: 72px 0 22px; padding-top: 18px; border-top: 1px solid var(--line); font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 500; line-height: 1.08; letter-spacing: -.03em; }
+    article h2:first-of-type { margin-top: 0; }
+    article h3 { margin: 42px 0 14px; color: var(--accent); font-size: 1.38rem; line-height: 1.22; }
+    article p, article li { font-size: 1.03rem; line-height: 1.78; }
+    article p { margin: 0 0 20px; }
+    article ul, article ol { margin: 0 0 26px; padding-left: 25px; }
+    article li { margin: 8px 0; padding-left: 4px; }
+    article strong { color: #101927; }
+    article hr { margin: 55px 0; border: 0; border-top: 1px solid var(--line); }
+    code { padding: 2px 5px; border-radius: 5px; background: var(--quote); }
+    .table-wrap { margin: 30px -20px 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); }
+    th, td { min-width: 150px; padding: 15px 17px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font: .9rem/1.55 system-ui, sans-serif; }
+    th { color: #fff; background: var(--accent); font-size: .75rem; letter-spacing: .055em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) { background: color-mix(in srgb, var(--quote) 45%, transparent); }
+    .footnote-ref a { font: 800 .7rem/1 system-ui, sans-serif; text-decoration: none; }
+    .footnotes { margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line); color: var(--muted); }
+    .footnotes li { margin-bottom: 14px; font: .86rem/1.62 system-ui, sans-serif; }
+    .backref { text-decoration: none; }
+    .footer { padding: 36px 20px 60px; color: var(--muted); text-align: center; font: .8rem/1.5 system-ui, sans-serif; }
+    @media (max-width: 920px) { .layout { display: block; width: min(800px, calc(100% - 24px)); } .toc { position: static; margin-bottom: 20px; max-height: none; } .toc ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } article { border-radius: 20px; } }
+    @media (max-width: 600px) { .topbar { letter-spacing: .02em; } .hero { padding-top: 54px; } .toc ol { grid-template-columns: 1fr; } article { padding: 30px 21px 54px; } .table-wrap { margin-inline: -12px; } article p, article li { font-size: 1rem; line-height: 1.72; } }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper: #101722; --surface: #182131; --ink: #f3ebdf; --muted: #b0bac8; --line: #354157; --accent: #ef8b67; --accent-soft: #392820; --quote: #222e40; --shadow: 0 22px 60px rgba(0,0,0,.26); }
+      a:hover { color: #ffb092; } article strong { color: #fff6ea; } th { color: #17120f; }
+    }
+    @media print { .topbar, .toc, .progress { display: none; } body { background: #fff; } .hero { padding: 28px 0; } .layout { display: block; width: 100%; margin: 0; } article { border: 0; box-shadow: none; padding: 0; } article h2 { break-after: avoid; } .table-wrap { break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <nav class="topbar" aria-label="Archive navigation">
+    <a href="../index.html">← Bible Bite Archive</a>
+    <span class="reading-time">6,371 words · 29 min read</span>
+  </nav>
+  <header class="hero">
+    <p class="kicker">Biblical Profile No. 1</p>
+    <h1>Love</h1>
+    <p>A whole-Bible study of what love is, who love is, whom love embraces, how love acts, and how love is pursued.</p>
+    <p class="thesis"><strong>Working definition:</strong> Biblical love is the whole-person posture by which we receive God's self-giving goodness and, in loyal obedience, seek another's true good through truthful, holy, compassionate, and costly action.</p>
+  </header>
+  <main class="layout">
+    <aside class="toc" aria-label="Profile contents">
+      <h2>In this profile</h2>
+      <ol><li><a href="#1-the-profile-at-a-glance">1. The profile at a glance</a></li>
+<li><a href="#2-what-is-love">2. What is love?</a></li>
+<li><a href="#3-the-language-of-love-hebrew-and-greek-without-shortcuts">3. The language of love: Hebrew and Greek without shortcuts</a></li>
+<li><a href="#4-who-is-love">4. Who is love?</a></li>
+<li><a href="#5-whom-do-we-love">5. Whom do we love?</a></li>
+<li><a href="#6-how-does-love-behave">6. How does love behave?</a></li>
+<li><a href="#7-what-love-is-not">7. What love is not</a></li>
+<li><a href="#8-how-do-we-pursue-love">8. How do we pursue love?</a></li>
+<li><a href="#9-a-biblical-discernment-grid">9. A biblical discernment grid</a></li>
+<li><a href="#10-the-profile-of-mature-love">10. The profile of mature love</a></li>
+<li><a href="#11-the-bibles-movement-of-love">11. The Bible's movement of love</a></li>
+<li><a href="#12-final-synthesis-what-love-asks-of-us">12. Final synthesis: what love asks of us</a></li>
+<li><a href="#core-passage-library">Core passage library</a></li>
+<li><a href="#research-notes-and-sources">Research notes and sources</a></li></ol>
+    </aside>
+    <article><h1 id="love-a-biblical-profile">LOVE: A Biblical Profile</h1>
+<h2 id="a-whole-bible-study-of-what-love-is-who-love-is-whom-love-embraces-how-love-acts-and-how-love-is-pursued">A whole-Bible study of what love is, who love is, whom love embraces, how love acts, and how love is pursued</h2>
+<p><strong>Working definition:</strong> Biblical love is the whole-person posture by which we receive God's self-giving goodness and, in loyal obedience, seek another's true good through truthful, holy, compassionate, and costly action.</p>
+<p><strong>Translation note:</strong> Scripture is paraphrased or cited by reference; linked biblical texts use the NRSVue unless otherwise indicated.</p>
+<p>That definition deliberately includes <strong>affection and action</strong>, <strong>gift and command</strong>, <strong>tenderness and truth</strong>, <strong>desire and discipline</strong>. No single English or biblical-language word contains the entire theology. Scripture gives love a profile through God's character, God's acts, Israel's covenant calling, Jesus' life and death, and the Spirit-formed life of God's people.</p>
+<hr>
+<h2 id="1-the-profile-at-a-glance">1. The profile at a glance</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Question</th>
+<th>Biblical answer</th>
+<th>Anchor texts</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>What is love?</strong></td>
+<td>A rightly ordered desire for, delight in, and active pursuit of another's true good.</td>
+<td>Leviticus 19:17–18; John 13:1–17, 34–35; 1 Corinthians 13:4–7</td>
+</tr>
+<tr>
+<td><strong>Who is love?</strong></td>
+<td>God is love. The Father reveals love by sending the Son; the Son embodies love by laying down his life; the Spirit pours God's love into and produces love within believers.</td>
+<td>1 John 4:7–12; John 15:9–13; Romans 5:5–8; Galatians 5:22</td>
+</tr>
+<tr>
+<td><strong>Where does love begin?</strong></td>
+<td>Not with our reaching for God, but with God's prior initiative toward the undeserving.</td>
+<td>Deuteronomy 7:7–9; Hosea 11:1–9; 1 John 4:10, 19; Romans 5:6–8</td>
+</tr>
+<tr>
+<td><strong>What does love seek?</strong></td>
+<td>The beloved's genuine good under God's truth—not merely comfort, approval, access, or the removal of consequences.</td>
+<td>Romans 12:9; 1 Corinthians 13:6; Hebrews 12:5–11</td>
+</tr>
+<tr>
+<td><strong>Whom must we love?</strong></td>
+<td>God, neighbor, fellow believer, stranger, vulnerable person, spouse and family, and even enemy.</td>
+<td>Deuteronomy 6:4–9; Leviticus 19:18, 33–34; John 13:34–35; Matthew 5:43–48</td>
+</tr>
+<tr>
+<td><strong>What shape does love take?</strong></td>
+<td>Attention, truthfulness, patience, generosity, protection, forgiveness, service, hospitality, justice, fidelity, prayer, and self-giving.</td>
+<td>Micah 6:8; Romans 12:9–21; 1 Corinthians 13:4–7; 1 John 3:16–18</td>
+</tr>
+<tr>
+<td><strong>What is love not?</strong></td>
+<td>Not mere emotion, flattery, indulgence, possessiveness, lust, coercion, enabling, hypocrisy, or self-erasure.</td>
+<td>2 Samuel 13:1–15; Proverbs 27:5–6; Romans 12:9; 1 Corinthians 13:5–6</td>
+</tr>
+<tr>
+<td><strong>How is love pursued?</strong></td>
+<td>By abiding in Christ, receiving God's love, renewing the mind, obeying God's commands, practicing concrete mercy, and walking by the Spirit in community.</td>
+<td>John 15:1–17; Romans 12:1–2; Galatians 5:13–25; Hebrews 10:24–25</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="2-what-is-love">2. What is love?</h2>
+<p>The Bible never reduces love to one thing.</p>
+<p>Love can include powerful affection: Jacob loves Rachel (Genesis 29:18–20); Jonathan loves David (1 Samuel 18:1–3); parents feel deep compassion for children (Isaiah 49:15); the lovers in the Song of Songs experience desire so intense that it is described as lovesickness (Song 2:4–7; 5:8). Biblical faith does not distrust emotion simply because it is emotion.</p>
+<p>Yet love is more than what happens inside us. In the Torah, loving God means giving God exclusive, whole-life allegiance (<a href="https://www.biblegateway.com/passage/?search=Deuteronomy%206%3A4-9&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Deuteronomy 6:4–9</a>). Loving one's neighbor appears amid commands not to steal, lie, exploit workers, mock disability, show partiality, slander, nurse hatred, or take revenge (<a href="https://www.biblegateway.com/passage/?search=Leviticus%2019%3A9-18&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Leviticus 19:9–18</a>). The placement explains the command: love becomes visible in social behavior.</p>
+<p>Jesus joins love for God and love for neighbor as the two commands on which the Law and Prophets hang (<a href="https://www.biblegateway.com/passage/?search=Matthew%2022%3A34-40&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Matthew 22:34–40</a>). Paul similarly says love fulfills the law because it does no wrong to a neighbor (<a href="https://www.biblegateway.com/passage/?search=Romans%2013%3A8-10&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Romans 13:8–10</a>). John makes the test material: anyone with resources who sees a sibling in need yet closes the heart cannot plausibly claim that God's love abides within; love must be expressed in deed and truth (<a href="https://www.biblegateway.com/passage/?search=1%20John%203%3A16-18&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">1 John 3:16–18</a>).</p>
+<p>The biblical pattern is therefore neither <strong>“love is whatever I feel”</strong> nor <strong>“love is cold duty regardless of the heart.”</strong> It is affection trained by truth and allegiance embodied in action. In Deuteronomy's covenant setting, “love” carries the force of loyalty, service, and obedience, yet its rhetoric also aims at the heart's gratitude and desire.<sup class="footnote-ref"><a href="#note-1" id="ref-1">1</a></sup></p>
+<h3 id="a-compact-definition">A compact definition</h3>
+<p><strong>Love is a settled orientation of the whole person toward communion with God and the genuine flourishing of another, expressed through faithful, truthful, and self-giving action.</strong></p>
+<p>Each phrase matters:</p>
+<ul>
+<li><strong>Settled orientation:</strong> love can act when warm emotion is absent (Matthew 5:44), but it also seeks the healing of the heart rather than permanent emotional falseness (Deuteronomy 6:5; Romans 12:9).</li>
+<li><strong>Whole person:</strong> biblical “heart” is not only emotion; it includes thought, intention, and will (Deuteronomy 6:5–6; Proverbs 4:23). Love recruits the entire self.</li>
+<li><strong>Communion with God:</strong> the first command is to love God, not to idolize another person's happiness or our own desire to be needed (Deuteronomy 6:4–5; Matthew 22:37–38).</li>
+<li><strong>Genuine flourishing:</strong> love seeks what is truly good, which is why it can comfort, give, warn, confront, forgive, protect, or establish a boundary (Romans 12:9; 1 Corinthians 13:6; Galatians 6:1–2).</li>
+<li><strong>Faithful:</strong> love remains dependable across changing moods (Hosea 2:19–20; 2 Timothy 2:13).</li>
+<li><strong>Truthful:</strong> love does not celebrate falsehood or wrongdoing (Zechariah 8:16–19; Ephesians 4:15, 25; 1 Corinthians 13:6).</li>
+<li><strong>Self-giving:</strong> its supreme Christian pattern is Christ giving his life for others (John 15:12–13; Galatians 2:20; 1 John 3:16).</li>
+</ul>
+<hr>
+<h2 id="3-the-language-of-love-hebrew-and-greek-without-shortcuts">3. The language of love: Hebrew and Greek without shortcuts</h2>
+<h3 id="31-ahav-ahavah-to-love-love">3.1 אַהַב / אַהֲבָה — <em>ʾahav / ʾahavah</em>: to love / love</h3>
+<p>This is the Hebrew Bible's broad, ordinary love word-family. It can describe:</p>
+<ul>
+<li>God's love for Israel (Deuteronomy 7:7–8; Hosea 11:1);</li>
+<li>Israel's required love for God (Deuteronomy 6:5);</li>
+<li>love for neighbor and resident alien (Leviticus 19:18, 34);</li>
+<li>family and friendship affection (Genesis 22:2; 1 Samuel 18:1–3);</li>
+<li>romantic and sexual desire (Genesis 29:18–20; Song 2:4–7);</li>
+<li>and even disordered love—loving evil, bribery, pleasure, or darkness (Psalm 52:3; Isaiah 1:23; Proverbs 21:17; compare John 3:19 in Greek).</li>
+</ul>
+<p>That range matters. The Hebrew word is not automatically holy merely because it means “love.” The <strong>object, manner, and context</strong> determine whether the love is faithful or corrupt. Amnon says he “loves” Tamar, but his possessive desire becomes manipulation, rape, and hatred (<a href="https://www.biblegateway.com/passage/?search=2%20Samuel%2013%3A1-15&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">2 Samuel 13:1–15</a>). Scripture thereby distinguishes love from appetite that consumes a person.</p>
+<p>In the Song of Songs, <em>ʾahavah</em> can name romantic or sexual passion. The repeated warning not to “awaken love until it is ready” treats desire as powerful and good, yet not to be forced or prematurely aroused; the exact nuance remains debated.<sup class="footnote-ref"><a href="#note-2" id="ref-2">2</a></sup> Biblical love is therefore not anti-body or anti-desire. It insists that desire be honored, timed, and ordered rather than made sovereign.</p>
+<h3 id="32-hesed-steadfast-loyal-loving-kindness">3.2 חֶסֶד — <em>ḥesed</em>: steadfast, loyal loving-kindness</h3>
+<p><em>Ḥesed</em> is often translated “steadfast love,” “lovingkindness,” “mercy,” “kindness,” or “loyalty.” No single English term works everywhere. It is fundamentally relational and can describe God's dealings with people, people's dealings with one another, and—in a smaller number of passages—human response to God.<sup class="footnote-ref"><a href="#note-3" id="ref-3">3</a></sup></p>
+<p>The Old Testament's defining portrait appears when God proclaims his own character: merciful, gracious, slow to anger, abundant in <em>ḥesed</em> and faithfulness, forgiving yet not indifferent to guilt (<a href="https://www.biblegateway.com/passage/?search=Exodus%2034%3A6-7&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Exodus 34:6–7</a>). Here steadfast love is not indulgence. Mercy and moral seriousness coexist.</p>
+<p>Ruth gives <em>ḥesed</em> narrative flesh. Ruth stays with Naomi, works for food, risks vulnerability, and seeks the family's future (Ruth 1:8, 16–17; 2:11–12; 3:10). Love is loyal initiative that creates life where loss had closed the future.</p>
+<p><strong>Guardrail:</strong> <em>ḥesed</em> is not a secret “truer Hebrew word” that replaces every other kind of love, nor does it always mean “covenant love.” Its sense must be read in each relationship and story.<sup class="footnote-ref"><a href="#note-3" id="ref-3">3</a></sup></p>
+<h3 id="33-raham-rahamim-to-show-compassion-compassion">3.3 רָחַם / רַחֲמִים — <em>raḥam / raḥamim</em>: to show compassion / compassion</h3>
+<p>This Hebrew family conveys tender mercy and deep compassion. Related forms can refer to the womb, so the family of words can evoke bodily, parental tenderness. But this is an association within the word-family, not permission to replace every occurrence with “womb-love.” Context still controls meaning.<sup class="footnote-ref"><a href="#note-4" id="ref-4">4</a></sup></p>
+<p>Scripture applies this compassion richly to God:</p>
+<ul>
+<li>as a father has compassion on children, so the LORD has compassion on those who fear him (Psalm 103:13–14);</li>
+<li>even if a nursing mother could forget, God will not forget Zion (Isaiah 49:14–16);</li>
+<li>God's heart recoils at handing Israel over, and divine compassion grows warm (Hosea 11:8–9);</li>
+<li>Jeremiah speaks of God's heart yearning for Ephraim and God's certain mercy (Jeremiah 31:20).</li>
+</ul>
+<p>This vocabulary keeps biblical love from becoming a sterile principle. God's love is morally serious, but not emotionally vacant.</p>
+<h3 id="34-levav-nefesh-meod-heart-lifeself-muchness">3.4 לֵבָב, נֶפֶשׁ, מְאֹד — <em>levav, nefesh, meʾod</em>: heart, life/self, muchness</h3>
+<p>Deuteronomy 6:5 commands love for God with all one's <em>levav</em>, <em>nefesh</em>, and <em>meʾod</em>.</p>
+<ul>
+<li><strong>Levav (“heart”)</strong> commonly includes mind, intention, desire, and will—not merely feelings.</li>
+<li><strong>Nefesh</strong> often means living being, life, throat, appetite, or self; “soul” can mislead if it suggests an immaterial slice separable from embodied life.</li>
+<li><strong>Meʾod</strong> ordinarily means “very” or “much”; in Deuteronomy 6:5 it functions substantivally, suggesting one's strength, capacity, or resources—one's “muchness.”</li>
+</ul>
+<p>The three are best heard cumulatively: love God with the entirety of who you are and what you possess. Jesus' citation expands the wording to heart, soul/life, mind, and strength, making the totality explicit (Mark 12:28–30). The point is not to divide a human being into anatomical compartments but to deny God no territory.</p>
+<h3 id="35-and-rea-and-ger-neighbor-and-resident-alien">3.5 רֵעַ and גֵּר — <em>rēaʿ</em> and <em>gēr</em>: neighbor and resident alien</h3>
+<p>Leviticus commands love for the <em>rēaʿ</em>—the neighbor or fellow—and later repeats the same “as yourself” wording for the <em>gēr</em>, the resident alien living among Israel (<a href="https://www.biblegateway.com/passage/?search=Leviticus%2019%3A17-18%2C33-34&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Leviticus 19:17–18, 33–34</a>). Israel's memory of being aliens in Egypt becomes moral formation: remembered vulnerability is meant to produce present solidarity.</p>
+<p>The immediate setting is Israel's holiness code, but the chapter itself refuses a narrow ethic that cares only for the familiar. Jesus' Good Samaritan story presses the question “Who is my neighbor?” toward “Whose neighbor will I become?” (<a href="https://www.biblegateway.com/passage/?search=Luke%2010%3A25-37&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Luke 10:25–37</a>). Scholarship debates the precise ancient scope of “neighbor,” but Leviticus's explicit command concerning the resident alien and the New Testament's reception prevent ethnic familiarity from being love's final boundary.<sup class="footnote-ref"><a href="#note-5" id="ref-5">5</a></sup></p>
+<h3 id="36-and-agape-agapao-and-phileo">3.6 ἀγάπη / ἀγαπάω and φιλέω — <em>agapē / agapaō</em> and <em>phileō</em></h3>
+<p>In the New Testament, <em>agapē/agapaō</em> becomes the dominant vocabulary for love, while <em>phileō</em> commonly expresses love, affection, or friendship. A popular teaching sharply divides them: <em>agapē</em> is said to be divine, unconditional love, while <em>phileō</em> is merely human friendship. The actual usage is not that tidy.</p>
+<ul>
+<li>People can <em>agapaō</em> darkness, public praise, or the present world (John 3:19; 12:43; 2 Timothy 4:10).</li>
+<li>The Father <em>phileō</em> the Son and disciples (John 5:20; 16:27).</li>
+<li>John can vary <em>agapaō</em> and <em>phileō</em> as part of his literary style; many scholars therefore reject building a hierarchy of love out of the verb-switch in John 21:15–17.<sup class="footnote-ref"><a href="#note-6" id="ref-6">6</a></sup></li>
+</ul>
+<p>The distinctively Christian content of <em>agapē</em> comes primarily from the <strong>story and pattern attached to it</strong>, not from magic embedded in the syllables: God sends the Son; Christ lays down his life; believers serve one another and seek the other's good (John 3:16; 13:1–17; Romans 5:6–8; 1 John 4:7–12).</p>
+<hr>
+<h2 id="4-who-is-love">4. Who is love?</h2>
+<h3 id="41-god-is-love">4.1 “God is love”</h3>
+<p>First John twice states, “God is love” (<a href="https://www.biblegateway.com/passage/?search=1%20John%204%3A7-21&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">1 John 4:7–21</a>). The statement does <strong>not</strong> mean “whatever anyone calls love is God,” as though love were an independent standard to which God must conform. John defines God's love through a particular history:</p>
+<ol>
+<li>God sends the Son so that we might live through him (4:9).</li>
+<li>Love begins in God's initiative, not ours (4:10, 19).</li>
+<li>The Son deals with human sin rather than pretending it does not matter (4:10).</li>
+<li>God's prior love creates an obligation and capacity to love one another (4:11–12, 19–21).</li>
+<li>Invisible God becomes perceptible in a community whose love embodies God's presence (4:12).<sup class="footnote-ref"><a href="#note-7" id="ref-7">7</a></sup></li>
+</ol>
+<p>“God is love” is therefore a claim about God's character and action. Love is not one divine mood among others. Yet the God who is love is also light and has no darkness (1 John 1:5), righteous (1 John 2:29), and opposed to sin (1 John 3:4–10). Biblical love must be read within that whole portrait.</p>
+<h3 id="42-the-father-is-loves-source-and-initiator">4.2 The Father is love's source and initiator</h3>
+<p>God's love is prior. God sets affection upon Israel not because Israel is large, impressive, or morally superior, but because God loves and remains faithful to the promise (<a href="https://www.biblegateway.com/passage/?search=Deuteronomy%207%3A6-9&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Deuteronomy 7:6–9</a>). God loves a wayward people and calls them back (Hosea 11:1–9; Jeremiah 31:3). In the New Testament, God acts for sinners, enemies, and the powerless before they repair themselves (Romans 5:6–11).</p>
+<p>Grace does not mean God is indifferent to transformation. It means transformation begins as response, not as payment. “We love because he first loved us” (1 John 4:19).</p>
+<h3 id="43-jesus-is-love-made-visible-and-measurable">4.3 Jesus is love made visible and measurable</h3>
+<p>Jesus does more than discuss love. He gives it a human face and a concrete measure:</p>
+<ul>
+<li>He touches the socially excluded (Mark 1:40–45).</li>
+<li>He receives children whom others treat as interruptions (Mark 10:13–16).</li>
+<li>He looks at a morally serious but divided man and loves him while naming what he lacks (Mark 10:17–22).</li>
+<li>He weeps with mourners and then confronts death (John 11:32–44).</li>
+<li>He washes his disciples' feet, taking the servant's place (John 13:1–17).</li>
+<li>He lays down his life for friends and enemies (John 15:12–13; Luke 23:33–34; Romans 5:8–10).</li>
+</ul>
+<p>When Jesus commands, “love one another as I have loved you,” the word <strong>as</strong> supplies love's pattern (<a href="https://www.biblegateway.com/passage/?search=John%2013%3A1-17%2C34-35&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">John 13:34–35</a>). The command is “new” not because neighbor-love had never been commanded, but because Jesus' own service and impending death give the command its decisive form. The foot washing presents humble service as enacted love and anticipates the self-giving of the cross.<sup class="footnote-ref"><a href="#note-8" id="ref-8">8</a></sup></p>
+<h3 id="44-the-spirit-forms-love-in-people">4.4 The Spirit forms love in people</h3>
+<p>Love is commanded, but not generated by willpower alone. God's love is poured into believers' hearts through the Holy Spirit (Romans 5:5). Love is the first named fruit of the Spirit (Galatians 5:22–23). The Spirit creates one body in which gifts are given for the common good, and love determines how those gifts are used (1 Corinthians 12:4–13:13).</p>
+<p>This guards against two errors:</p>
+<ul>
+<li><strong>Passivity:</strong> “If God wants me loving, he will make it happen.” Paul commands believers to pursue love (1 Corinthians 14:1), walk by the Spirit (Galatians 5:16), and put away destructive habits (Colossians 3:5–14).</li>
+<li><strong>Self-salvation:</strong> “If I try harder, I can manufacture Christlike love.” The branch bears fruit by abiding in the vine (John 15:1–17). Christian effort is responsive and dependent.</li>
+</ul>
+<hr>
+<h2 id="5-whom-do-we-love">5. Whom do we love?</h2>
+<h3 id="51-love-god-the-ordering-center">5.1 Love God: the ordering center</h3>
+<p>The first love is God with the whole self (Deuteronomy 6:4–5; Matthew 22:37–38). This does not compete with neighbor-love as though attention given to God were attention stolen from people. Proper love of God trains us to recognize God's image in people, receive God's commands as good, and refuse to turn any human relationship into an idol.</p>
+<p>Jesus connects love for him with keeping his commands and abiding in his love (John 14:15, 21–24; 15:9–10). Obedience is not a price paid to make God love us; it is the relational form of responsive love.</p>
+<h3 id="52-love-the-neighbor-seek-the-good-near-you">5.2 Love the neighbor: seek the good near you</h3>
+<p>The neighbor command is surrounded by highly practical obligations: leave food for the poor and alien; do not steal, deceive, exploit, delay wages, mock disability, pervert justice, slander, hate, take revenge, or hold a grudge (Leviticus 19:9–18). Love is not abstract goodwill toward humanity while mistreating the person within reach.</p>
+<p>“As yourself” assumes the immediacy with which people ordinarily recognize and pursue their own needs; it turns that same moral seriousness outward. The verse does not by itself issue a separate command to build self-esteem, nor does it authorize self-hatred. It makes the neighbor's life matter to me with the gravity that my own life already carries.</p>
+<h3 id="53-love-the-stranger-cross-the-boundary-of-belonging">5.3 Love the stranger: cross the boundary of belonging</h3>
+<p>God “loves the strangers,” giving food and clothing, and commands Israel to do likewise because Israel knew alien life in Egypt (<a href="https://www.biblegateway.com/passage/?search=Deuteronomy%2010%3A17-19&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Deuteronomy 10:17–19</a>). Leviticus 19:34 gives the resident alien the same love formula as the neighbor. Hospitality in the New Testament continues this outward posture (Romans 12:13; Hebrews 13:1–2; 1 Peter 4:8–9).</p>
+<p>Biblical hospitality is not entertaining impressive guests who can repay. Jesus specifically urges generosity toward those who cannot return the favor (Luke 14:12–14).</p>
+<h3 id="54-love-the-vulnerable-make-care-concrete">5.4 Love the vulnerable: make care concrete</h3>
+<p>The recurring biblical quartet—widow, orphan, alien, and poor—identifies people made vulnerable by weak social protection (Deuteronomy 24:17–22; Psalm 146:7–9; Isaiah 1:16–17; James 1:27). Love includes justice because deprivation can be produced or intensified by dishonest courts, withheld wages, predatory wealth, and partiality (Isaiah 10:1–2; Amos 5:11–15, 21–24; James 2:1–9; 5:1–6).</p>
+<p>Mercy without justice can repeatedly treat wounds while leaving the machinery causing them untouched. Justice without mercy can treat people as cases rather than neighbors. The prophetic vision joins covenant loyalty, justice, and humble fellowship with God (Hosea 6:6; Micah 6:8; Zechariah 7:8–10).</p>
+<h3 id="55-love-fellow-believers-become-a-recognizable-people">5.5 Love fellow believers: become a recognizable people</h3>
+<p>Jesus says mutual love will mark his disciples publicly (John 13:34–35). The early church's practices include shared resources, table fellowship, care for widows, hospitality, mutual burden-bearing, correction, forgiveness, and refusal of status rivalry (Acts 2:42–47; 6:1–7; Romans 12:3–16; Galatians 6:1–2; Colossians 3:12–15).</p>
+<p>First Corinthians 13 is often read at weddings, but its original literary home is a divided church competing over status and spiritual gifts (1 Corinthians 12–14). Paul's point is not merely that love is beautiful. The most spectacular speech, knowledge, faith, generosity, and sacrifice become spiritually empty when detached from patient, non-boastful pursuit of the community's good. Scholarship on 1 Corinthians 13:1 emphasizes how Paul redirects gifts from solo display toward intelligible service that builds the body.<sup class="footnote-ref"><a href="#note-9" id="ref-9">9</a></sup></p>
+<h3 id="56-love-family-spouse-and-friend-covenant-fidelity-with-particular-people">5.6 Love family, spouse, and friend: covenant fidelity with particular people</h3>
+<p>Scripture recognizes distinct forms of particular love:</p>
+<ul>
+<li>parental tenderness and responsibility (Isaiah 49:15; Ephesians 6:1–4);</li>
+<li>children's honor and care for parents (Exodus 20:12; Mark 7:9–13; 1 Timothy 5:4, 8);</li>
+<li>faithful friendship (1 Samuel 18:1–4; Proverbs 17:17; 27:5–10);</li>
+<li>marital delight, fidelity, mutual belonging, and embodied desire (Genesis 2:18–25; Proverbs 5:15–19; Song 2:7; 8:6–7; 1 Corinthians 7:3–5; Ephesians 5:21–33).</li>
+</ul>
+<p>Song of Songs refuses the idea that biblical love is merely disembodied benevolence. It celebrates attraction, beauty, longing, voice, mutual seeking, and exclusive attachment. Yet its repeated warning against prematurely awakening love treats erotic desire as a fire to honor rather than manipulate (Song 2:7; 3:5; 8:4), and its climax describes love as fierce and unpurchaseable (Song 8:6–7).</p>
+<p>Ephesians 5 frames Christian marriage through Christ's self-giving for the church and begins the household section with mutual submission in reverence for Christ (Ephesians 5:21–33). Whatever conclusions Christian traditions reach about marital roles, the passage cannot faithfully be used to baptize domination, coercion, or harm: Christ's pattern is nourishing, cherishing, sanctifying self-gift.</p>
+<h3 id="57-love-the-enemy-desire-good-without-calling-evil-good">5.7 Love the enemy: desire good without calling evil good</h3>
+<p>Jesus commands love for enemies and prayer for persecutors so that disciples resemble the Father, who gives sun and rain beyond the circle of the deserving (<a href="https://www.biblegateway.com/passage/?search=Matthew%205%3A43-48&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Matthew 5:43–48</a>). Luke makes the action explicit: do good, bless, pray, lend without calculating repayment, and show mercy (Luke 6:27–36). The command extends beyond non-retaliation to active goodwill.<sup class="footnote-ref"><a href="#note-10" id="ref-10">10</a></sup></p>
+<p>Enemy-love does <strong>not</strong> require:</p>
+<ul>
+<li>calling abuse acceptable (Romans 12:9);</li>
+<li>denying justice or shielding crime (Romans 13:1–4);</li>
+<li>granting immediate trust after betrayal (John 2:23–25 is at least a reminder that love and unrestricted self-entrustment are not identical);</li>
+<li>remaining physically available to violence (Jesus sometimes withdraws from lethal threats: Matthew 12:14–15; John 8:59);</li>
+<li>or removing every consequence (Galatians 6:7–8).</li>
+</ul>
+<p>It does require refusing personal vengeance, refusing dehumanization, desiring repentance rather than destruction, praying for the offender's genuine good, and—where wise and possible—overcoming evil with good (Romans 12:14–21). Forgiveness relinquishes revenge to God; reconciliation additionally requires truth and, ordinarily, repentance and repaired trust (Luke 17:3–4; Romans 12:18).</p>
+<h3 id="58-love-oneself-rightly-receive-creaturehood-reject-self-idolatry-and-self-contempt">5.8 Love oneself rightly: receive creaturehood, reject self-idolatry and self-contempt</h3>
+<p>The Bible does not center the modern slogan “you cannot love others until you love yourself.” Sometimes people who intensely protect their own comfort remain poor lovers. Scripture assumes ordinary self-concern in “love your neighbor as yourself” and redirects it outward (Leviticus 19:18; Ephesians 5:28–29).</p>
+<p>Still, self-hatred is not holiness. Humans bear God's image (Genesis 1:26–27); bodies matter to God (1 Corinthians 6:19–20); believers are God's workmanship (Ephesians 2:10); rest and creaturely limitation are gifts (Exodus 20:8–11; Mark 6:31). Jesus himself sleeps, eats, withdraws to pray, accepts care, and refuses demands outside his vocation (Mark 4:38; Luke 5:15–16; John 11:5–7).</p>
+<p>Right self-love is therefore <strong>received stewardship, not self-worship</strong>: I neither make myself the center nor treat with contempt a life God created and called to service. Self-denial means surrendering the false self ruled by sin and status, not erasing personhood or cooperating with abuse (Mark 8:34–37; Philippians 2:3–8).</p>
+<hr>
+<h2 id="6-how-does-love-behave">6. How does love behave?</h2>
+<h3 id="61-love-pays-attention">6.1 Love pays attention</h3>
+<p>Jesus repeatedly sees the person others overlook: a bent woman, a grieving mother, children, a blind beggar, Zacchaeus (Luke 7:11–17; 13:10–16; 18:15–17, 35–43; 19:1–10). The Good Samaritan first <strong>sees</strong>, then is moved with compassion, approaches, treats, transports, pays, and promises follow-up (Luke 10:33–35). Attention becomes mercy through a chain of actions.</p>
+<p><strong>Practice:</strong> Ask, “What is this person actually carrying?” before asking, “What response will make me feel loving?” (James 1:19).</p>
+<h3 id="62-love-tells-the-truth">6.2 Love tells the truth</h3>
+<p>Love rejoices with truth, not wrongdoing (1 Corinthians 13:6). The New Testament calls believers to speak truth “in love,” put away falsehood, and use words that give grace to hearers (Ephesians 4:15, 25, 29). Proverbs prefers a friend's faithful wound to an enemy's profuse kisses (Proverbs 27:5–6).</p>
+<p>Truth without love can become a weapon. Love without truth can become complicity. Biblical maturity refuses the split.</p>
+<h3 id="63-love-protects-without-possessing">6.3 Love protects without possessing</h3>
+<p>Love “does not insist on its own way” (1 Corinthians 13:5). It does not turn another person into property, a project, emotional medication, or proof of our worth. Jesus loves the rich man yet permits him to walk away (Mark 10:21–22). The father in Luke 15 welcomes the returning son but does not prevent the son's earlier departure by force.</p>
+<p>Protection seeks safety and good; control seeks ownership. The difference is visible in whether the beloved's agency and accountability are respected.</p>
+<h3 id="64-love-is-patient-but-patience-is-not-endless-permission">6.4 Love is patient, but patience is not endless permission</h3>
+<p>First Corinthians 13:4 says love is patient; God is repeatedly “slow to anger” (Exodus 34:6; Psalm 103:8). Patience creates room for growth and repentance. Yet Jesus also gives procedures for confronting harm and, if necessary, changing the relationship to the unrepentant offender (Matthew 18:15–17). Paul removes an exploitative offender from the church for the good of both offender and community (1 Corinthians 5:1–5, 11–13).</p>
+<p>Love can wait. Love can also say, “This may not continue.”</p>
+<h3 id="65-love-forgives-remembers-wisely-and-seeks-repair">6.5 Love forgives, remembers wisely, and seeks repair</h3>
+<p>Forgiveness lies at the heart of Christian prayer (Matthew 6:12, 14–15) and reflects God's costly mercy in Christ (Ephesians 4:32; Colossians 3:13). It rejects revenge and the endless collection of moral debt.</p>
+<p>But forgiveness is not pretending nothing happened. Scripture can forgive while naming wounds, requiring restitution, and testing changed conduct (Numbers 5:5–7; Luke 19:8–9; Philemon 8–21). Trust concerns present reliability and can be rebuilt gradually. Reconciliation is relational restoration; it cannot be manufactured by the injured party alone (Romans 12:18).</p>
+<h3 id="66-love-gives-serves-and-bears-burdens">6.6 Love gives, serves, and bears burdens</h3>
+<p>Christians are freed not for self-indulgence but to become servants through love (Galatians 5:13–14). Love shares food, shelter, money, time, skill, presence, and advocacy (Isaiah 58:6–10; Matthew 25:31–46; Acts 4:32–35; Romans 12:13; James 2:14–17). It bears another's burden without taking over the responsibility that belongs to that person (compare Galatians 6:2 with 6:5).</p>
+<h3 id="67-love-seeks-justice-and-peace">6.7 Love seeks justice and peace</h3>
+<p>Biblical peace (<em>shalom</em>) is more than the absence of argument; it concerns wholeness, welfare, and rightly ordered relationships (Psalm 85:10; Isaiah 32:16–18). Love does not create superficial peace by silencing the harmed. It pursues peace through truth, justice, repentance, and repair (Jeremiah 6:13–14; Matthew 5:9, 23–24; James 3:17–18).</p>
+<h3 id="68-love-endures-without-worshiping-suffering">6.8 Love endures without worshiping suffering</h3>
+<p>Love “bears,” “believes,” “hopes,” and “endures” (1 Corinthians 13:7). In context, this is the resilient posture required for life in a flawed Christian community. It is not a command to believe every liar, conceal every offense, or remain under violence. Paul himself escapes plots, appeals to legal protection, names harmful people, and sometimes separates from coworkers (Acts 9:23–25; 22:25–29; 2 Timothy 4:14–15; Acts 15:36–40).</p>
+<p>Endurance is fidelity to God and the good. Sometimes that fidelity stays and labors; sometimes it leaves danger, tells the truth, and seeks help.</p>
+<hr>
+<h2 id="7-what-love-is-not">7. What love is not</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Counterfeit</th>
+<th>Why it fails</th>
+<th>Biblical diagnostic</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Sentimentality</strong></td>
+<td>Feels deeply but may never act.</td>
+<td>1 John 3:16–18; James 2:15–17</td>
+</tr>
+<tr>
+<td><strong>Legalism</strong></td>
+<td>Acts outwardly while the heart remains proud, harsh, or loveless.</td>
+<td>Matthew 23:23–28; Luke 11:42</td>
+</tr>
+<tr>
+<td><strong>Lust</strong></td>
+<td>Seeks to consume or possess rather than honor and give.</td>
+<td>2 Samuel 13:1–15; 1 Thessalonians 4:3–8</td>
+</tr>
+<tr>
+<td><strong>Flattery</strong></td>
+<td>Says what secures approval rather than what serves the person.</td>
+<td>Proverbs 26:28; 27:5–6; 1 Thessalonians 2:5–8</td>
+</tr>
+<tr>
+<td><strong>Enabling</strong></td>
+<td>Removes consequences in ways that help destruction continue.</td>
+<td>Proverbs 19:19; Galatians 6:7–8; 2 Thessalonians 3:10–15</td>
+</tr>
+<tr>
+<td><strong>Control</strong></td>
+<td>Confuses closeness with ownership and service with managing another's life.</td>
+<td>Mark 10:21–22, 42–45; 1 Corinthians 13:5</td>
+</tr>
+<tr>
+<td><strong>Partiality</strong></td>
+<td>Gives dignity according to wealth, usefulness, tribe, or status.</td>
+<td>Leviticus 19:15; James 2:1–9</td>
+</tr>
+<tr>
+<td><strong>People-pleasing</strong></td>
+<td>Makes human approval the controlling good.</td>
+<td>John 12:42–43; Galatians 1:10</td>
+</tr>
+<tr>
+<td><strong>Self-erasure</strong></td>
+<td>Calls contempt for God's creature “humility.”</td>
+<td>Psalm 139:13–18; Ephesians 2:10; Mark 12:31</td>
+</tr>
+<tr>
+<td><strong>“Truth” without mercy</strong></td>
+<td>Uses correct claims to dominate, humiliate, or avoid compassion.</td>
+<td>Matthew 9:10–13; John 1:14; Ephesians 4:15</td>
+</tr>
+<tr>
+<td><strong>“Mercy” without truth</strong></td>
+<td>Calls destructive behavior harmless and blocks repentance.</td>
+<td>Romans 12:9; 1 Corinthians 13:6; Revelation 3:19</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="8-how-do-we-pursue-love">8. How do we pursue love?</h2>
+<p>Paul does not say merely to admire love. He commands, “Pursue love” (<a href="https://www.biblegateway.com/passage/?search=1%20Corinthians%2013%3A1-14%3A1&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">1 Corinthians 14:1</a>). The Greek verb <em>diōkō</em> can carry the force of chase or earnest pursuit. Love is gift, fruit, command, and practiced vocation.</p>
+<h3 id="81-receive-before-performing">8.1 Receive before performing</h3>
+<p>Remain in the story of God's prior love: chosen without superiority (Deuteronomy 7:7–8), sought in wandering (Hosea 11:1–9), welcomed in repentance (Luke 15:11–32), and reconciled while still an enemy (Romans 5:6–11). People who treat love as a wage must either boast when successful or despair when they fail.</p>
+<p><strong>Practice:</strong> Regularly pray through Romans 5:6–11 or 1 John 4:7–21, naming what God has initiated before naming what you must do.</p>
+<h3 id="82-abide-in-christ">8.2 Abide in Christ</h3>
+<p>In John 15, abiding, commandment-keeping, joy, fruit, friendship, and self-giving love belong together. Abiding is continued relational dependence: receiving Jesus' words, praying, obeying, and remaining in his community (John 15:1–17).</p>
+<p><strong>Practice:</strong> Before a difficult interaction, ask: “How has Christ loved me here, and what would it mean to remain inside that love while I respond?”</p>
+<h3 id="83-train-attention-through-scripture-and-prayer">8.3 Train attention through Scripture and prayer</h3>
+<p>The Shema places God's words on the heart and weaves them into home, travel, bedtime, morning, body, and household (Deuteronomy 6:6–9). Love grows as imagination and habit are repeatedly reoriented.</p>
+<p><strong>Practice:</strong> Use a four-part daily examen:</p>
+<ol>
+<li>Where did I receive love today?</li>
+<li>Whom did I truly see?</li>
+<li>Where did fear, hurry, pride, or appetite make me use or ignore someone?</li>
+<li>What concrete act of repair or service is obedience tomorrow?</li>
+</ol>
+<h3 id="84-practice-the-verbs-of-romans-12">8.4 Practice the verbs of Romans 12</h3>
+<p><a href="https://www.biblegateway.com/passage/?search=Romans%2012%3A9-21&amp;version=NRSVUE" target="_blank" rel="noopener noreferrer">Romans 12:9–21</a> is one of Scripture's fullest operational profiles of love. Love is genuine; it abhors evil, clings to good, shows family affection and honor, serves, hopes, persists in prayer, shares, welcomes strangers, blesses persecutors, enters others' joy and grief, rejects status pride, refuses revenge, seeks peace, feeds enemies, and overcomes evil with good.</p>
+<p>These are trainable actions. Choose one verb each week and attach it to a specific person and plan.</p>
+<h3 id="85-tell-the-truth-early-and-gently">8.5 Tell the truth early and gently</h3>
+<p>Leviticus places “do not hate in your heart” beside the duty to reprove a neighbor (Leviticus 19:17). Stored resentment is not superior to wise confrontation. Jesus likewise urges direct, initially private conversation (Matthew 18:15).</p>
+<p><strong>Practice:</strong> Replace accusation with observation, effect, desire, and request: “When ___ happened, it affected ___. I want truth and peace between us. Would you be willing to ___?” This is a prudential tool, not a biblical formula, but it can serve biblical honesty and gentleness (Galatians 6:1; Ephesians 4:15).</p>
+<h3 id="86-give-love-a-budget-and-calendar">8.6 Give love a budget and calendar</h3>
+<p>Good intentions lose repeatedly to hurry. The Good Samaritan spends time, supplies, transportation, money, and future attention (Luke 10:33–35). The early church organizes care when good intentions prove insufficient (Acts 6:1–7).</p>
+<p><strong>Practice:</strong> Reserve actual time and resources for hospitality, generosity, presence, mentoring, reconciliation, and care for vulnerable people (Romans 12:13; Ephesians 5:15–16).</p>
+<h3 id="87-accept-community-correction-and-limits">8.7 Accept community, correction, and limits</h3>
+<p>Love is learned in a body whose members differ and need one another (1 Corinthians 12:12–27). We need people who can expose our blind spots, receive our gifts, limit our grandiosity, and help bear real burdens (Proverbs 27:17; Galatians 6:1–2; Hebrews 10:24–25).</p>
+<p>Limits are part of creaturely love. Jesus does not heal every sick person in Israel during his earthly ministry, answer every demand, or remain constantly accessible (Mark 1:35–39; Luke 4:40–44; 5:15–16). Saying yes to a God-given vocation entails saying no to other demands.</p>
+<h3 id="88-walk-by-the-spirit-and-repent-quickly">8.8 Walk by the Spirit and repent quickly</h3>
+<p>The works of the flesh fracture relationships; the Spirit produces love, joy, peace, patience, kindness, generosity, faithfulness, gentleness, and self-control (Galatians 5:13–25). These qualities are not unrelated virtues sitting beside love; they describe much of love's emotional and behavioral texture.</p>
+<p>Failure is inevitable. The loving response is not image management but confession, repentance, restitution where possible, and renewed obedience (Psalm 51; Matthew 5:23–24; Luke 19:8–9; 1 John 1:8–9).</p>
+<hr>
+<h2 id="9-a-biblical-discernment-grid">9. A biblical discernment grid</h2>
+<p>When an action is presented as “loving,” ask:</p>
+<ol>
+<li><strong>Is it rooted in God's prior love, or in panic, guilt, control, or the need to be admired?</strong> (1 John 4:10, 18–19; Galatians 1:10)</li>
+<li><strong>Does it seek the person's true good or merely immediate relief?</strong> (Romans 12:9; Hebrews 12:10–11)</li>
+<li><strong>Can it coexist with truth?</strong> (1 Corinthians 13:6; Ephesians 4:15)</li>
+<li><strong>Does it honor the other's dignity and agency rather than use or possess them?</strong> (Genesis 1:27; 1 Corinthians 13:5)</li>
+<li><strong>Does it protect the vulnerable and refuse partiality?</strong> (Isaiah 1:17; James 2:1–9)</li>
+<li><strong>Is it willing to bear cost rather than transfer every cost to the beloved?</strong> (John 10:11–15; 1 John 3:16–18)</li>
+<li><strong>Does it also respect creaturely limits and responsibilities?</strong> (Mark 1:35–39; Galatians 6:2, 5)</li>
+<li><strong>Would it remain loving if no one applauded?</strong> (Matthew 6:1–4)</li>
+<li><strong>Does it move toward peace without hiding injustice?</strong> (Jeremiah 6:14; Romans 12:18)</li>
+<li><strong>Does it resemble Jesus?</strong> (John 13:12–17, 34; Philippians 2:3–8)</li>
+</ol>
+<p>No checklist removes the need for wisdom. It does expose counterfeits that borrow love's name.</p>
+<hr>
+<h2 id="10-the-profile-of-mature-love">10. The profile of mature love</h2>
+<p>Mature biblical love is:</p>
+<ul>
+<li><strong>God-centered:</strong> it loves creatures without making them gods (Deuteronomy 6:4–5).</li>
+<li><strong>Responsive:</strong> it begins in being loved by God (1 John 4:19).</li>
+<li><strong>Embodied:</strong> it gives food, time, touch, shelter, money, presence, and service (Luke 10:33–35; 1 John 3:17–18).</li>
+<li><strong>Affective:</strong> it feels compassion, delight, grief, longing, and joy (Hosea 11:8; John 11:35–36; Philippians 1:8).</li>
+<li><strong>Covenantally loyal:</strong> it remains faithful beyond convenience (Ruth 1:16–17; Hosea 2:19–20).</li>
+<li><strong>Truthful:</strong> it refuses lies and rejoices in truth (1 Corinthians 13:6; Ephesians 4:25).</li>
+<li><strong>Holy:</strong> it seeks good and resists what destroys (Romans 12:9; 1 Peter 1:14–16, 22).</li>
+<li><strong>Just:</strong> it attends to power, partiality, wages, courts, and vulnerable lives (Leviticus 19:13–15; Isaiah 1:16–17; James 5:1–6).</li>
+<li><strong>Merciful:</strong> it moves toward need rather than merely assessing worthiness (Luke 6:35–36; 10:33–37).</li>
+<li><strong>Humble:</strong> it serves without status theater (John 13:1–17; Philippians 2:3–8).</li>
+<li><strong>Courageous:</strong> it confronts, protects, and endures cost (Leviticus 19:17; John 10:11–15).</li>
+<li><strong>Free:</strong> it can give without possessing and release revenge without denying justice (Mark 10:21–22; Romans 12:19–21).</li>
+<li><strong>Particular and expansive:</strong> it keeps promises to particular people while extending mercy beyond tribe and reciprocity (Ephesians 5:25–33; Matthew 5:43–48).</li>
+<li><strong>Hopeful:</strong> it refuses to reduce a person to the worst thing they have done, while still naming that wrong truthfully (Luke 19:1–10; 1 Corinthians 6:9–11).</li>
+<li><strong>Enduring:</strong> it remains oriented toward the good through inconvenience, disappointment, and suffering (1 Corinthians 13:7–8; Hebrews 12:1–3).</li>
+</ul>
+<hr>
+<h2 id="11-the-bibles-movement-of-love">11. The Bible's movement of love</h2>
+<p>The canon's story can be traced as a movement:</p>
+<ol>
+<li><strong>Creation:</strong> Humans are made for relationship with God, one another, and creation; every person bears God's image (Genesis 1:26–28; 2:18–25).</li>
+<li><strong>Distortion:</strong> Sin bends desire inward, producing blame, domination, envy, violence, and exile (Genesis 3:1–19; 4:1–16).</li>
+<li><strong>Election:</strong> God freely sets love upon a people to bless the nations, not to certify their superiority (Genesis 12:1–3; Deuteronomy 7:6–9).</li>
+<li><strong>Covenant instruction:</strong> Love of God becomes whole-life loyalty; love of neighbor and alien becomes concrete holiness (Deuteronomy 6:4–9; Leviticus 19).</li>
+<li><strong>Prophetic exposure:</strong> Worship without loyal love and justice is rejected (Isaiah 1:10–17; Hosea 6:6; Amos 5:21–24).</li>
+<li><strong>Incarnation:</strong> God gives the Son; Jesus shows divine love in touch, table, truth, service, forgiveness, and confrontation (John 1:14–18; 3:16–17; 13:1–17).</li>
+<li><strong>Cross and resurrection:</strong> Love bears sin and defeats death, not by denying evil but by passing through judgment into new creation (Romans 5:6–11; 1 Corinthians 15:20–28; 1 John 4:9–10).</li>
+<li><strong>Spirit-formed community:</strong> God's love is poured into hearts and made socially visible in a diverse body (Romans 5:5; 12:3–21; Galatians 5:13–25).</li>
+<li><strong>New creation:</strong> The story ends not in disembodied escape but in God's dwelling with humanity, tears wiped away, death gone, and the nations healed (Revelation 21:1–5; 22:1–5).</li>
+</ol>
+<p>Love is therefore not a side topic. It is the relational shape of life under God's reign—from creation's intention to new creation's fulfillment.</p>
+<hr>
+<h2 id="12-final-synthesis-what-love-asks-of-us">12. Final synthesis: what love asks of us</h2>
+<p><strong>What is love?</strong> It is the whole-person pursuit of true communion and another's genuine good—felt in affection, governed by truth, secured by faithfulness, and enacted at cost.</p>
+<p><strong>Who is love?</strong> God is love. The Father initiates, the Son embodies and measures, and the Spirit communicates and forms divine love in God's people.</p>
+<p><strong>How do we love?</strong> We pay attention; tell the truth; do justice; show mercy; honor bodies and agency; keep covenant; serve humbly; give concretely; forgive without falsifying; confront without contempt; establish boundaries without vengeance; welcome the stranger; pray for the enemy; and lay down power for another's good.</p>
+<p><strong>How do we pursue love?</strong> We receive before we perform, abide in Christ, rehearse Scripture, walk by the Spirit, practice love's verbs, organize our time and resources, accept correction and limits, and repent quickly when our love becomes fear, appetite, pride, flattery, control, or indifference.</p>
+<p>The shortest biblical summary may be this: <strong>love comes from God, takes the shape of Jesus, becomes fruitful through the Spirit, and moves toward the neighbor.</strong></p>
+<hr>
+<h2 id="core-passage-library">Core passage library</h2>
+<h3 id="gods-love">God's love</h3>
+<ul>
+<li>Exodus 34:6–7; Deuteronomy 7:6–9; Hosea 11:1–9; Jeremiah 31:3, 20</li>
+<li>John 3:16–17; Romans 5:5–11; 8:31–39; 1 John 4:7–21</li>
+</ul>
+<h3 id="love-for-god">Love for God</h3>
+<ul>
+<li>Deuteronomy 6:4–9; 10:12–19; Psalm 18:1; 63:1–8</li>
+<li>Matthew 22:34–40; John 14:15–24; 15:1–17</li>
+</ul>
+<h3 id="neighbor-stranger-and-enemy">Neighbor, stranger, and enemy</h3>
+<ul>
+<li>Leviticus 19:9–18, 33–34; Deuteronomy 10:17–19; Ruth 1–4</li>
+<li>Matthew 5:43–48; Luke 6:27–36; 10:25–37; Romans 12:9–21</li>
+</ul>
+<h3 id="love-in-christian-community">Love in Christian community</h3>
+<ul>
+<li>John 13:1–17, 34–35; Acts 2:42–47; 1 Corinthians 12:12–14:1</li>
+<li>Galatians 5:13–26; Ephesians 4:1–5:2; Colossians 3:12–17; 1 John 3:11–24</li>
+</ul>
+<h3 id="marital-family-and-friendship-love">Marital, family, and friendship love</h3>
+<ul>
+<li>Genesis 2:18–25; Ruth 1:16–17; 1 Samuel 18:1–4; Proverbs 5:15–19; 17:17; 27:5–10</li>
+<li>Song of Songs 2:4–7; 8:6–7; 1 Corinthians 7:3–5; Ephesians 5:21–33; 6:1–4</li>
+</ul>
+<h3 id="love-truth-correction-and-boundaries">Love, truth, correction, and boundaries</h3>
+<ul>
+<li>Leviticus 19:17–18; Proverbs 27:5–6; Matthew 18:15–20</li>
+<li>Romans 12:9; Galatians 6:1–5; Ephesians 4:15, 25–32; Hebrews 12:5–11</li>
+</ul>
+<hr>
+<h2 id="research-notes-and-sources">Research notes and sources</h2>
+<h3 id="method-note">Method note</h3>
+<p>Hebrew and Greek words are <strong>not codes</strong> whose roots automatically reveal a “true meaning” hidden from translations. A word has a range of possible senses; grammar, literary setting, social world, and usage determine its force in a particular verse. This study uses original-language vocabulary to clarify that range, while letting passages and the whole biblical storyline define the theology.</p>
+<section class="footnotes" aria-labelledby="research-notes-and-sources"><ol>
+<li id="note-1">Jon D. Levenson, <a href="https://www.thetorah.com/article/the-shema-and-the-commandment-to-love-god-in-its-ancient-contexts" target="_blank" rel="noopener noreferrer">“The Shema and the Commandment to Love God in Its Ancient Contexts”</a>, <em>TheTorah.com</em> (2016), especially “The Covenantal Context.” Levenson argues that Deuteronomy's love language includes loyalty, service, and obedience without excluding affection. <a class="backref" href="#ref-1" aria-label="Return to reference 1">↩</a></li>
+<li id="note-2"><a href="https://classic.net.bible.org/passage.php?passage=Sos+2%3A4-7" target="_blank" rel="noopener noreferrer">NET Bible notes on Song of Songs 2:4–7</a>, especially the notes on <em>ʾahavah</em> and the debated warning not to awaken love. <a class="backref" href="#ref-2" aria-label="Return to reference 2">↩</a></li>
+<li id="note-3">Jennifer M. Matheny, <a href="https://bibleinterp.arizona.edu/articles/hesed-hebrew-bible" target="_blank" rel="noopener noreferrer">“Ḥesed in the Hebrew Bible”</a>, <em>The Bible and Interpretation</em> (2026), especially “The Hebrew Word Ḥesed.” Matheny stresses that the term is relational, context-sensitive, and not reducible to one English equivalent or only to covenant obligation. <a class="backref" href="#ref-3" aria-label="Return to reference 3">↩</a></li>
+<li id="note-4"><a href="https://biblehub.com/hebrew/7355.htm" target="_blank" rel="noopener noreferrer">Brown–Driver–Briggs entry for רָחַם via Bible Hub</a>, with biblical usage references. The lexical relationship supports comparison with womb/parental compassion, but the sense of each form must still be determined in context. <a class="backref" href="#ref-4" aria-label="Return to reference 4">↩</a></li>
+<li id="note-5">Hendrik Bosman, <a href="https://www.scielo.org.za/scielo.php?pid=S1010-99192018000300009&amp;script=sci_arttext" target="_blank" rel="noopener noreferrer">“Loving the Neighbour and the Resident Alien in Leviticus 19 as Ethical Redefinition of Holiness”</a>, <em>Old Testament Essays</em> 31.3 (2018), especially the discussion of Leviticus 19:18, 33–34 and the covenantal, social force of love. <a class="backref" href="#ref-5" aria-label="Return to reference 5">↩</a></li>
+<li id="note-6">Ann Graham Brock, <a href="https://www.cambridge.org/core/journals/harvard-theological-review/article/abs/significance-of-and-in-the-tradition-of-jesus-sayings-and-in-the-early-christian-communities/F06C1E8A81278C02166C30E2D979234C" target="_blank" rel="noopener noreferrer">“The Significance of φιλέω and φίλος in the Tradition of Jesus Sayings and in the Early Christian Communities”</a>, <em>Harvard Theological Review</em> 90.4 (1997), 393–409. The article examines the widespread but contested claim that early Christians treated <em>agapaō</em> as categorically superior to <em>phileō</em>. <a class="backref" href="#ref-6" aria-label="Return to reference 6">↩</a></li>
+<li id="note-7">Dirk G. van der Merwe, <a href="https://www.scielo.org.za/scielo.php?pid=S2305-08532017000300011&amp;script=sci_arttext" target="_blank" rel="noopener noreferrer">“‘Lived experiences’ of the love of God according to 1 John 4”</a>, <em>In die Skriflig</em> 51.3 (2017), on God's sending of the Son and God's love becoming experientially visible as believers love one another. <a class="backref" href="#ref-7" aria-label="Return to reference 7">↩</a></li>
+<li id="note-8">Annang Asumang, <a href="https://journals.co.za/doi/10.10520/EJC133515" target="_blank" rel="noopener noreferrer">“Washing One Another's Feet as Jesus Did: Revelatory Activities and the Progressive Sanctification of Believers”</a>, <em>Conspectus</em> 15 (2013), abstract, on John 13's ethical presentation of humble, self-sacrificial service flowing from love. <a class="backref" href="#ref-8" aria-label="Return to reference 8">↩</a></li>
+<li id="note-9">Anathea Portier-Young, <a href="https://journals.sagepub.com/doi/10.1177/01461079050350030301" target="_blank" rel="noopener noreferrer">“Tongues and Cymbals: Contextualizing 1 Corinthians 13:1”</a>, <em>Biblical Theology Bulletin</em> 35.3 (2005), 99–105. The article locates Paul's love discourse within the use of gifts for the community's edification. <a class="backref" href="#ref-9" aria-label="Return to reference 9">↩</a></li>
+<li id="note-10">Craig S. Keener, <a href="https://www.biblegateway.com/resources/commentaries/IVP-NT/Matt/Love-Your-Enemies" target="_blank" rel="noopener noreferrer">“Love Your Enemies,” IVP New Testament Commentary on Matthew 5:43–48</a>, on active enemy-love, prayer, and the broad range of enemies in view. <a class="backref" href="#ref-10" aria-label="Return to reference 10">↩</a></li>
+</ol></section></article>
+  </main>
+  <footer class="footer">Wile E. Coyote Research Archive · Scripture links use the NRSVue unless otherwise indicated.</footer>
+  <script>
+    const progress = document.getElementById('progress');
+    const updateProgress = () => {
+      const total = document.documentElement.scrollHeight - innerHeight;
+      progress.style.width = (total > 0 ? (scrollY / total) * 100 : 0) + '%';
+    };
+    addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  </script>
+</body>
+</html>
